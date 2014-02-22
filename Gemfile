@@ -32,6 +32,14 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+############
+#  Custom gems
+############
+
+#MySQL database support
+gem 'mysql2'
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
