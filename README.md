@@ -10,4 +10,9 @@ xTable (prononcé crosstable) est une application web écrite avec le framework 
  * `Xtable::Application.config.secret_key_base = 'UN_SECRET'`
  * Générable avec `rake secret`
 3. Configuration de la BDD MySQL dans */config/database.yml*
-4. Lancer l'application `rails s`
+4. Créer le schéma de BDD `rake db:schema:load`
+5. Modifier */config/initializers/devise.rb* : 232 :
+ * Renseigner les bonnes infos : `config.omniauth :facebook, "APP_ID", "SECRET"`
+ * Indispensable de créer une application Facebook (https://developers.facebook.com/) et autoriser l'adresse sur laquelle tourne l'application
+ * Une fois le fichier adapté, `git update-index --assume-unchanged config/initializers/devise.rb`. Ceci pour ne pas commiter les infos relatives à l'API Facebook (APP_ID et SECRET)
+6. Lancer l'application `rails s`

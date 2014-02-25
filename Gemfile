@@ -39,6 +39,10 @@ end
 #MySQL database support
 gem 'mysql2'
 
+#Authentication
+gem 'devise'
+gem 'omniauth-facebook'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

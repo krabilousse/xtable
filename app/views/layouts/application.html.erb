@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Xtable</title>
+  <title>TestFacebook</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+Menu 
+<%= link_to "Home", root_path %> |
+<%= link_to "Private", private_content_path %> |
+
+<% if user_signed_in? then %>	
+	<%= link_to("Sign out", destroy_user_session_path(), method: :delete) %> 
+<% else %>	
+	<%= link_to "Sign in", new_user_session_path %>
+<% end %>
+ 
+<br /><br />
+
+<% if user_signed_in? && current_user.image? then %>
+	<% if current_user.image? then %>
+		<%= image_tag current_user.image, alt: "profile picture" %>
+	<% end %>
+	<% if current_user.name? then %>
+		<%= current_user.name %>
+	<% end %>	
+	<br /><br />
+<% end %>	
 
 <%= yield %>
 
