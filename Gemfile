@@ -45,8 +45,12 @@ gem 'omniauth-facebook'
 
 #Calendar
 gem 'fullcalendar-rails'
+
 #Bootstrap
 gem 'bootstrap-sass'
+
+#Font Awesome
+gem 'font-awesome-sass'
 
 
 # Use ActiveModel has_secure_password
