@@ -43,6 +43,8 @@ gem 'mysql2'
 gem 'devise'
 gem 'omniauth-facebook'
 
+#Calendar
+gem 'fullcalendar-rails'
 #Bootstrap
 gem 'bootstrap-sass'
 
