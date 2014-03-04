@@ -37,6 +37,9 @@
 						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'home' %>">
 							<%= link_to "Home", root_path %>
 						</li>
+						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'groups' %>">
+							<%= link_to "Groups", groups_path %>
+						</li>
 						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'private_content' %>">
 							<%= link_to "Private", private_content_path %>
 						</li>

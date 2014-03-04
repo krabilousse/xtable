@@ -4,12 +4,14 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all
+    @groups = Group.paginate(page: params[:page])
   end
 
   # GET /groups/1
   # GET /groups/1.json
   def show
+    @group = Group.find(params[:id])
+    @event = Event.new
   end
 
   # GET /groups/new
@@ -19,6 +21,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/1/edit
   def edit
+    @group = Group.find(params[:id])
   end
 
   # POST /groups
