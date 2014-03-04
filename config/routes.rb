@@ -6,7 +6,11 @@ Xtable::Application.routes.draw do
   root to: "staticcontent#home"
   
   get "/private" => "staticcontent#private_content", as: "private_content" 
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }, skip: :registrations
+  
+  as :user do    
+    delete 'users' => 'devise/registrations#destroy', :as => 'delete_user_registration'
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
