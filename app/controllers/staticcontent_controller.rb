@@ -1,6 +1,6 @@
 class StaticcontentController < ApplicationController
   before_filter :authenticate_user!, only: [:private_content]
-    
+
   def home
     
   end
