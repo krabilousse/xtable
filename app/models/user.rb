@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :user_roles
+  has_many :events
   has_many :groups, :through => :user_roles
 
   # Include default devise modules. Others available are:
