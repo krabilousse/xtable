@@ -37,6 +37,9 @@
 						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'home' %>">
 							<%= link_to "Home", root_path %>
 						</li>
+						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'groups' %>">
+							<%= link_to "Groups", groups_path %>
+						</li>
 						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'private_content' %>">
 							<%= link_to "Private", private_content_path %>
 						</li>
@@ -51,19 +54,18 @@
 							<p class="navbar-text">Sign in using</p>
 						</li>
 						<li>
-							<%= link_to(icon('facebook'), new_user_session_path) %>
+							<%= link_to(icon('facebook'), user_omniauth_authorize_path(provider: :facebook)) %>
 						</li>
 						<li>
-							<%= link_to(icon('twitter'), new_user_session_path) %>
+							<%= link_to(icon('twitter'), user_omniauth_authorize_path(provider: :facebook)) %>
 						</li>
 						<li>
-							<%= link_to(icon('github'), new_user_session_path) %>
+							<%= link_to(icon('github'), user_omniauth_authorize_path(provider: :facebook)) %>
 						</li>
 						<li>
-							<%= link_to(icon('google-plus'), new_user_session_path) %>
+							<%= link_to(icon('google-plus'), user_omniauth_authorize_path(provider: :facebook)) %>
 						</li>
 						<% end %>
-
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>

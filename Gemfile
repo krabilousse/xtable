@@ -52,7 +52,8 @@ gem 'bootstrap-sass'
 #Font Awesome
 gem 'font-awesome-sass'
 
-
+# Pagination
+gem 'will_paginate'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
