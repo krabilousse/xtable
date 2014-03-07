@@ -4,7 +4,7 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  config.secret_key = 'A_SECRET'
+  config.secret_key = YAML.load(File.open("#{Rails.root}/config/secrets.yml"))[Rails.env]['secret_key_devise']
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -229,7 +229,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'  
   require "omniauth-facebook"
-  config.omniauth :facebook, "APP_ID", "APP_SECRET"    
+  config.omniauth :facebook, YAML.load(File.open("#{Rails.root}/config/secrets.yml"))[Rails.env]['app_id_facebook'], YAML.load(File.open("#{Rails.root}/config/secrets.yml"))[Rails.env]['secret_key_facebook']    
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
