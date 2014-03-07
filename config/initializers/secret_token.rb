@@ -1,0 +1,1 @@
+Xtable::Application.config.secret_key_base = '7b09de8cf26c766b62b58a3c3eee1f10125b2d736991c3c78b35f74d3b7dfac7213f7d78d572ab318d6e4328560c3be19d1cf0d73dfdc5b9be54e21d6d2c8e86'
