@@ -8,7 +8,9 @@ Xtable::Application.routes.draw do
   get "/private" => "staticcontent#private_content", as: "private_content" 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }, skip: :registrations
   
+  
   as :user do    
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     delete 'users' => 'devise/registrations#destroy', :as => 'delete_user_registration'
   end
   # The priority is based upon order of creation: first created -> highest priority.
