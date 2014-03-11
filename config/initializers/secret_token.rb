@@ -10,4 +10,4 @@
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
 
-Xtable::Application.config.secret_key_base = YAML.load(File.open("#{Rails.root}/config/secrets.yml"))[Rails.env]['secret_key_base']
+Xtable::Application.config.secret_key_base = APP_CONFIG['secret_key_base']
