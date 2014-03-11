@@ -10,10 +10,7 @@ defaults: &defaults
   secret_key_facebook: "APP_SECRET"
 
 development:
-  <<: *defaults   
-  #Facebook data
-  app_id_facebook: "298948096923631"
-  secret_key_facebook: "c48669b6e00057e76bbdc5b683de8183"
+  <<: *defaults    
 
 test:
   <<: *defaults  
