@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-APP_CONFIG = YAML.load(File.open("#{Rails.root}/config/xtable.yml"))[Rails.env]
+APP_CONFIG =  YAML.load_file(File.expand_path('../xtable.yml', __FILE__))[Rails.env]
 
 module Xtable  
   class Application < Rails::Application
