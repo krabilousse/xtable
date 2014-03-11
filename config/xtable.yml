@@ -6,8 +6,8 @@ defaults: &defaults
   secret_key_devise: "de65416187d5993b6a3da5e2e0941f918b792531d746a824f2e40ec253105c90aad7c08f5cb4020017c64131d20eb5b4af2a550bb80796aa1544bad897788841"
   
   #Facebook data
-  app_id_facebook: "APP_ID"
-  secret_key_facebook: "APP_SECRET"
+  app_id_facebook: "620266828027497"
+  secret_key_facebook: "d5d65181ae4e5d019e0a08b555645d1f"
 
 development:
   <<: *defaults    
