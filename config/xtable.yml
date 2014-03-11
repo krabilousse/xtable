@@ -1,0 +1,19 @@
+#Xtable configuration
+
+defaults: &defaults
+  #You can generate it with: rake secret 
+  secret_key_base: "e74fa09c1728b6ea4206d601a609d9e9a94da2bb8f24f4beef619562ccc7954b3b1ecb95ab91b083188f517a8114e1121fe0e8ab94ea610a01f60c334eebd534"
+  secret_key_devise: "de65416187d5993b6a3da5e2e0941f918b792531d746a824f2e40ec253105c90aad7c08f5cb4020017c64131d20eb5b4af2a550bb80796aa1544bad897788841"
+  
+  #Facebook data
+  app_id_facebook: "APP_ID"
+  secret_key_facebook: "APP_SECRET"
+
+development:
+  <<: *defaults     
+
+test:
+  <<: *defaults  
+  
+production:
+  <<: *defaults  

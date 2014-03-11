@@ -1,7 +1,7 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2>Account management</h2>
 
 <h3>Cancel my account</h3>
 
-<p>Unhappy? <%= link_to("Cancel my account", delete_user_registration_path, :data => { :confirm => "Are you sure?" }, :method => :delete) %></p>
-
-<%= link_to "Back", :back %>
+<p><%= link_to "Cancel", root_path(), class: "btn btn-default" %> 
+	<%= link_to("Delete my account", delete_user_registration_path, data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger") %>
+</p>
