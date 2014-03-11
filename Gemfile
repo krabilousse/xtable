@@ -7,7 +7,7 @@ gem 'rails', '4.0.2'
 gem 'sqlite3'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -61,10 +61,10 @@ gem 'will_paginate'
 # gem 'unicorn'
 
 # Use Capistrano for deployment
- gem 'capistrano', group: :development
- gem 'capistrano-bundler', '~> 1.1.2'
- gem 'capistrano-rvm'
- gem 'capistrano-rails', '~> 1.1'
+gem 'capistrano', group: :development
+gem 'capistrano-rails', '~> 1.1'
+gem 'capistrano-bundler', '~> 1.1.2'
+gem 'capistrano-rvm'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]

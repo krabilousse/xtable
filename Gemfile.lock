@@ -187,7 +187,7 @@ DEPENDENCIES
   mysql2
   omniauth-facebook
   rails (= 4.0.2)
-  sass-rails (~> 4.0.0)
+  sass-rails
   sdoc
   sqlite3
   turbolinks
