@@ -12,6 +12,7 @@ Xtable::Application.routes.draw do
   as :user do    
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     delete 'users' => 'devise/registrations#destroy', :as => 'delete_user_registration'
+    get 'users/sign_in' => 'devise/sessions#new', :as => 'new_user_session'
     delete 'users/sign_out' => 'devise/sessions#destroy', :as => 'destroy_user_session'
   end
   # The priority is based upon order of creation: first created -> highest priority.
