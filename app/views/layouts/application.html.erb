@@ -44,14 +44,26 @@
 							<%= link_to "Private", private_content_path %>
 						</li>
 					</ul>
-					<ul class="nav navbar-nav navbar-right">						
+					<ul class="nav navbar-nav navbar-right">
 						<% if user_signed_in? then %>
+						<% if current_user.image? then %>
+						<li>
+							<%= image_tag current_user.image, alt: "profile picture", class: "navbar-brand" %>
+						</li>
+						<% end %>
+						<% if current_user.name? then %>
+						<li>
+							<%= link_to(current_user.name, edit_user_registration_path) %>																					
+						</li>
+						<% end %>
 						<li>
 							<%= link_to("Sign out", destroy_user_session_path(), method: :delete) %>
 						</li>
 						<% else %>
 						<li>
-							<p class="navbar-text">Sign in using</p>
+							<p class="navbar-text">
+								Sign in using
+							</p>
 						</li>
 						<li>
 							<%= link_to(icon('facebook'), user_omniauth_authorize_path(provider: :facebook)) %>
@@ -83,16 +95,7 @@
 					<%= alert %>
 				</p>
 			</div>
-			<% end %>		
-
-			<% if user_signed_in? && current_user.image? then %>
-			<% if current_user.image? then %>
-			<%= image_tag current_user.image, alt: "profile picture" %>
-			<% end %>
-			<% if current_user.name? then %>
-			<%= current_user.name %>
-			<% end %>
-			<% end %>
+			<% end %>			
 
 			<%= yield %>
 		</div><!-- /.container -->
