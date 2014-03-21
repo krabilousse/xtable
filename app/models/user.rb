@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
-  has_many :user_roles
+  has_many :user_roles, dependent: :destroy
   has_and_belongs_to_many :events
   
   has_many :groups, :through => :user_roles
-  has_many :events, :through => :groups
+  has_many :events, :through => :groups, dependent: :destroy  
+  
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
