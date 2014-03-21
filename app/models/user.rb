@@ -9,9 +9,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook, :github]
+         :omniauthable, :omniauth_providers => [:facebook, :github, :google_oauth2]
          
-  def self.find_for_facebook_oauth(auth)
+  def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
         user.provider = auth.provider
         user.uid = auth.uid
@@ -24,9 +24,9 @@ class User < ActiveRecord::Base
     
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+      if data = session["devise.user_attributes"] && session["devise.user_attributes"]["extra"]["raw_info"]
         user.email = data["email"] if user.email.blank?
       end
-    end
+    end    
   end
 end
