@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140314123120) do
+ActiveRecord::Schema.define(version: 20140321121344) do
 
   create_table "events", force: true do |t|
     t.string   "name"
@@ -19,12 +19,12 @@ ActiveRecord::Schema.define(version: 20140314123120) do
     t.datetime "startDate"
     t.datetime "endDate"
     t.string   "location"
-    t.integer  "users_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
   end
 
-  add_index "events", ["users_id"], name: "index_events_on_users_id", using: :btree
+  add_index "events", ["group_id"], name: "index_events_on_group_id", using: :btree
 
   create_table "events_users", id: false, force: true do |t|
     t.integer "event_id"
@@ -33,15 +33,10 @@ ActiveRecord::Schema.define(version: 20140314123120) do
 
   create_table "groups", force: true do |t|
     t.string   "name"
-    t.integer  "events_id"
-    t.integer  "tags_id"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "groups", ["events_id"], name: "index_groups_on_events_id", using: :btree
-  add_index "groups", ["tags_id"], name: "index_groups_on_tags_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -53,7 +48,10 @@ ActiveRecord::Schema.define(version: 20140314123120) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
   end
+
+  add_index "tags", ["group_id"], name: "index_tags_on_group_id", using: :btree
 
   create_table "user_roles", force: true do |t|
     t.integer  "user_id"

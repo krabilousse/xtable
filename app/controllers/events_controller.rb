@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticate_user!, only: [:index]
   # GET /events
   # GET /events.json
   def index
@@ -8,7 +8,7 @@ class EventsController < ApplicationController
     
     startD = Time.at(params[:start].to_f).to_datetime
     endD = Time.at(params[:end].to_f).to_datetime
-    
+        
     respond_to do |format|
       format.json {
         render json: @events
