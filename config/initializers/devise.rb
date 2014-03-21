@@ -229,8 +229,10 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'  
   require "omniauth-facebook"
-
-  config.omniauth :facebook, APP_CONFIG['app_id_facebook'], APP_CONFIG['secret_key_facebook']    
+  config.omniauth :facebook, APP_CONFIG['app_id_facebook'], APP_CONFIG['secret_key_facebook']
+  
+  require "omniauth-github"
+  config.omniauth :github, APP_CONFIG['app_id_github'], APP_CONFIG['secret_key_github'], scope: 'user'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -57,12 +57,12 @@
 						</li>
 						<% end %>
 						<li>
-							<%= link_to("Sign out", destroy_user_session_path(), method: :delete) %>
+							<%= link_to(icon('sign-out', 'Sign out'), destroy_user_session_path(), method: :delete) %>
 						</li>
 						<% else %>
 						<li>
 							<p class="navbar-text">
-								Sign in using
+								<%= icon('sign-out', 'Sign in using') %>
 							</p>
 						</li>
 						<li>
@@ -72,7 +72,7 @@
 							<%= link_to(icon('twitter'), user_omniauth_authorize_path(provider: :facebook)) %>
 						</li>
 						<li>
-							<%= link_to(icon('github'), user_omniauth_authorize_path(provider: :facebook)) %>
+							<%= link_to(icon('github'), user_omniauth_authorize_path(provider: :github)) %>
 						</li>
 						<li>
 							<%= link_to(icon('google-plus'), user_omniauth_authorize_path(provider: :facebook)) %>
