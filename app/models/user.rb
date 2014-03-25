@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   has_many :user_roles, dependent: :destroy
   has_and_belongs_to_many :events
   
@@ -12,7 +13,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook, :github, :google_oauth2]
-         
+ 
+
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
         user.provider = auth.provider
@@ -31,4 +33,12 @@ class User < ActiveRecord::Base
       end
     end    
   end
+  
+  def create_user_bound_group
+    g = Group.new
+    g.users << self
+    g.save
+  end
+  
+  after_create :create_user_bound_group
 end
