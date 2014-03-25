@@ -1,22 +1,53 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @group.name %>
+<p id="notice">
+	<%= notice %>
 </p>
 
-<p>
-  <strong>Events:</strong>
-</p>
+<h1><%= @group.name %></h1>
 
-<p>
-  <strong>Tags:</strong>
-</p>
+<p></p>
+<a class="btn btn-primary">Subscribe now !</a>
 
+<h2>What ?</h2>
 <p>
-  <strong>Description:</strong>
-  <%= @group.description %>
+	<%= @group.description %>
 </p>
+<table>
+	<tr>
+		<th>Event</th>
+		<th>Subscribe</th>
+	</tr>
+	<% @events.each do |event| %>
+	<tr>
+		<td><%= event.name %></td>
+		<td>+</td>
+	</tr>
+	<% end %>
+</table>
+
+<h2>Who's the boss ?</h2>
+<table>
+	<tr>
+		<th>Members</th>
+	</tr>
+	<% @members.each do |member| %>
+	<tr>
+		<td><%= member.name %></td>
+	</tr>
+	<% end %>
+</table>
+
+<h2>Who like that ?</h2>
+<table>
+	<tr>
+		<th>Followers</th>
+	</tr>
+	<% @followers.each do |follower| %>
+	<tr>
+		<td><%= follower.name %></td>
+	</tr>
+	<% end %>
+	
+</table>
 
 <%= link_to 'Edit', edit_group_path(@group) %> |
 <%= link_to 'Back', groups_path %>

@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :events
   
   has_many :groups, :through => :user_roles
+  has_many :roles, :through => :user_roles
   has_many :events, :through => :groups, dependent: :destroy  
   
 
