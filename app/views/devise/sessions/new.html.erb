@@ -1,3 +1,6 @@
+<h3>Please sign in</h3> 
 
-<%= link_to(icon('facebook', 'Sign in with Facebook'), user_omniauth_authorize_path(provider: :facebook), :class => "btn btn-lg btn-primary") %>
+<%= link_to(icon('facebook', 'Sign in with Facebook'), user_omniauth_authorize_path(provider: :facebook), :class => "btn btn-lg btn-primary") %> 
+<%= link_to(icon('github', 'Sign in with github'), user_omniauth_authorize_path(provider: :github), :class => "btn btn-lg btn-default") %> 
+<%= link_to(icon('google-plus', 'Sign in with Google+'), user_omniauth_authorize_path(provider: :google_oauth2), :class => "btn btn-lg btn-danger") %>
 

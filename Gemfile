@@ -43,6 +43,7 @@ gem 'mysql2'
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
 
 #Calendar
 gem 'fullcalendar-rails'

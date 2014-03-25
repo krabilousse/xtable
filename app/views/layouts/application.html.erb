@@ -67,15 +67,12 @@
 						</li>
 						<li>
 							<%= link_to(icon('facebook'), user_omniauth_authorize_path(provider: :facebook)) %>
-						</li>
-						<li>
-							<%= link_to(icon('twitter'), user_omniauth_authorize_path(provider: :facebook)) %>
-						</li>
+						</li>						
 						<li>
 							<%= link_to(icon('github'), user_omniauth_authorize_path(provider: :github)) %>
 						</li>
 						<li>
-							<%= link_to(icon('google-plus'), user_omniauth_authorize_path(provider: :facebook)) %>
+							<%= link_to(icon('google-plus'), user_omniauth_authorize_path(provider: :google_oauth2)) %>
 						</li>
 						<% end %>
 					</ul>
