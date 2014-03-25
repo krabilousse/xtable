@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  
   has_many :user_roles
   has_and_belongs_to_many :events
   
@@ -10,7 +11,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook, :github]
-         
+  
+  def create_user_bound_group
+    g = Group.new
+    g.users << self
+    g.save
+  end
+  
   def self.find_for_facebook_oauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
         user.provider = auth.provider
@@ -29,4 +36,5 @@ class User < ActiveRecord::Base
       end
     end
   end
+  after_create :create_user_bound_group
 end
