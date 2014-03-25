@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 20140325150358) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_roles_id"
     t.integer  "user_role_id"
   end
 
