@@ -15,7 +15,7 @@ class GroupsController < ApplicationController
     @events = @group.events
     @users = @group.users
     @followers = @users
-    @members = @users.joins(:roles).where("roles.name=?","Member")  
+    @members = @users.joins(:roles).where("roles.name=?","Member")
   end
 
   # GET /groups/new
