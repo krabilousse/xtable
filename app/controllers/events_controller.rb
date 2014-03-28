@@ -16,10 +16,12 @@ class EventsController < ApplicationController
         render json: @events
         .where('startDate BETWEEN ? AND ?', startD, endD)
         .where('endDate BETWEEN ? AND ?', startD, endD)
-        .where(@events.users.include? current_user)
-        .all
+        .select{|e| e.users.include? current_user}
         }
     end
+    
+    
+    
   end
 
   # GET /events/1
