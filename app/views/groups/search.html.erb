@@ -1,4 +1,4 @@
-<h1>Visible Groups</h1>
+<h1>Search results</h1>
 
 <%= render 'search' %>
 <br/>
@@ -13,7 +13,7 @@
   </thead>
 
   <tbody>
-    <% @groups.each do |group| %>
+    <% @search.each do |group| %>
       <tr>
         <td><%= link_to group.name, group %></td>
         <td><%= group.description %></td>
@@ -23,6 +23,6 @@
   </tbody>
 </table>
 
-<%= will_paginate @groups, renderer: BootstrapPagination::Rails %>
+<%= will_paginate @search, renderer: BootstrapPagination::Rails %>
 
 <br>
