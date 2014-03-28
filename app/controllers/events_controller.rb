@@ -9,11 +9,14 @@ class EventsController < ApplicationController
     startD = Time.at(params[:start].to_f).to_datetime
     endD = Time.at(params[:end].to_f).to_datetime
         
+    
+        
     respond_to do |format|
       format.json {
         render json: @events
         .where('startDate BETWEEN ? AND ?', startD, endD)
         .where('endDate BETWEEN ? AND ?', startD, endD)
+        .where(@events.users.include? current_user)
         .all
         }
     end
@@ -22,9 +25,6 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    respond_to do |format|
-      format.json { render json: @event.to_json(only: [:id])}
-    end
   end
 
   # GET /events/new

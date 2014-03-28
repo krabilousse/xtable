@@ -13,7 +13,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     r = Role.where(name: "Member")
     @members = @group.users.where(role: r)
-    
+
     @event = Event.new
   end
 
