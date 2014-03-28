@@ -11,11 +11,10 @@ class GroupsController < ApplicationController
   # GET /groups/1.json
   def show
     @group = Group.find(params[:id])
-
-    r = Role.where(name: "Member")
-    @members = @group.users.where(role: r)
-    
-    @event = Event.new
+    @events = @group.events
+    @users = @group.users
+    @followers = @users
+    @members = @users.joins(:roles).where("roles.name=?","Member")  
   end
 
   # GET /groups/new
