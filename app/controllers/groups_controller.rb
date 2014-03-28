@@ -11,10 +11,10 @@ class GroupsController < ApplicationController
   # GET /groups/1.json
   def show
     @group = Group.find(params[:id])
-    r = Role.where(name: "Member")
-    @members = @group.users.where(role: r)
-
-    @event = Event.new
+    @events = @group.events
+    @users = @group.users
+    @followers = @users
+    @members = @users.joins(:roles).where("roles.name=?","Member")
   end
 
   # GET /groups/new
@@ -66,7 +66,7 @@ class GroupsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_group

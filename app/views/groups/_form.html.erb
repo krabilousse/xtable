@@ -1,4 +1,4 @@
-<%= form_for(@group) do |f| %>
+<%= bootstrap_form_for(@group) do |f| %>
   <% if @group.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
@@ -12,18 +12,14 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <!--<%= f.label :name %>--><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :tags_id %><br>
-    <%= f.text_field :tags_id %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
+    <!--<%= f.label :description %>--><br>
     <%= f.text_field :description %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Apply", class: "btn btn-primary" %>
   </div>
 <% end %>
