@@ -70,7 +70,7 @@ class GroupsController < ApplicationController
   
   def search
     @emptySearch=Group.new
-    @search=Group.all.paginate(page: params[:page])
+    @search=Group.where(name: group_params[:name]).paginate(page: params[:page])
   end
   
   private
