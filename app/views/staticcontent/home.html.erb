@@ -5,5 +5,12 @@ This is the public home page
 
 
 <script>
-	$(document).ready(function() { $("div#calendar").fullCalendar(); } );
+	$(document).ready(function() { 
+		var calendarWrapper = new zCalendarWrapper({
+			container: '#calendar',
+			api: {
+				get: "<%= events_path %>.json"
+			}
+		});
+	}) ;
 </script>

@@ -12,8 +12,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.json {
         render json: @events
-        .where('startDate BETWEEN ? AND ?', startD, endD)
-        .where('endDate BETWEEN ? AND ?', startD, endD)
+        .where(:startDate => startD.to_time..endD.to_time)
         .select{|e| e.users.include? current_user}
         }
     end
