@@ -1,4 +1,4 @@
 <%= bootstrap_form_for(@emptySearch, url:{action: "search"}, method: "get") do |f| %>
-  <%= f.text_field :name %>
+  <%= f.search_field :name %>
   <%= f.submit "search", class: "btn btn-primary" %>
 <% end %>
