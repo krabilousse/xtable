@@ -4,13 +4,13 @@
 
 <h1><%= @group.name %></h1>
 
-<%= link_to 'Subscribe now !', group_subscribe_path(@group) %>
+<%= link_to 'Subscribe now !', group_subscribe_path(@group), class: "btn btn-primary"  %>
 
 <h2>What ?</h2>
 <p>
 	<%= @group.description %>
 </p>
-<table>
+<table class="table table-hover">
 	<tr>
 		<th>Event</th>
 		<th>Subscribe</th>
@@ -24,9 +24,9 @@
 </table>
 
 <h2>Who's the boss ?</h2>
-<table>
+<table class="table table-hover">
 	<tr>
-		<th>Members</th>
+		<th>Admins</th>
 	</tr>
 	<% @admins.each do |member| %>
 	<tr>
@@ -36,7 +36,7 @@
 </table>
 
 <h2>Who like that ?</h2>
-<table>
+<table class="table table-hover">
 	<tr>
 		<th>Followers</th>
 	</tr>
