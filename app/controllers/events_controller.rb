@@ -15,6 +15,7 @@ class EventsController < ApplicationController
         .where(:startDate => startD.to_time..endD.to_time)
         .select{|e| e.users.include? current_user}
         }
+      format.html { render :action => "index"}
     end
     
     

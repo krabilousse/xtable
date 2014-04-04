@@ -108,7 +108,7 @@ function zCalendarWrapper(config) {
     /**
      * @private
      */
-    var format = "yyyy-MM-dd HH:mm:ss";
+    var format = "dd-MM-yyyy HH:mm:ss";
     /**
      * jQuery FullCalendar instance
      * @private
@@ -160,6 +160,7 @@ function zCalendarWrapper(config) {
                     start: startDate,
                     end: endDate,
                     allDay: allDay,
+                    backgroundColor: color,
                     ts: ts
                 }, true); // make the event "stick"
             }

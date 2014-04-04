@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   belongs_to :group
   
   def as_json options={}
-    {id:id, start:startDate, end:endDate}
+    {id:id, title: name, start:startDate, end:endDate, color:"red"}
   end
   
 end
