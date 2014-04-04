@@ -36,22 +36,22 @@ end
 #  Custom gems
 ############
 
-#MySQL database support
+# MySQL database support
 gem 'mysql2'
 
-#Authentication
+# Authentication
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 
-#Calendar
+# Calendar
 gem 'fullcalendar-rails'
 
-#Bootstrap
+# Bootstrap
 gem 'bootstrap-sass'
 
-#Font Awesome
+# Font Awesome
 gem 'font-awesome-sass'
 
 # Pagination

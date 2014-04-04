@@ -1,34 +1,37 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+<h1><%= @event.name %></h1>
 
-<p>
-  <strong>Startdate:</strong>
-  <%= @event.startDate %>
-</p>
+<p></p>
+<a class="btn btn-primary">Subscribe now !</a>
 
-<p>
-  <strong>Enddate:</strong>
-  <%= @event.endDate %>
-</p>
+<h2>Where ?</h2>
+<p><%= @event.location %></p>
 
+<h2>When ?</h2>
 <p>
-  <strong>Location:</strong>
-  <%= @event.location %>
+	Begining : <%= @event.startDate %>
+	<br/>
+	End :   <%= @event.endDate %>
 </p>
+	
+<h2>What ?</h2>
+<p>  <%= @event.description %></p>
 
-<p>
-  <strong>Users:</strong>
-  <%= @event.users %>
-</p>
+<h2>Who ?</h2>
+<p>Group : <%= @group.name %></p>
+
+<h2>Whom with ?</h2>
+	<p>
+		Participants (<%= @participants.count %>) :
+		<ul>
+			<% @participants.each do |p| %>
+			<li><%= p.name %></li>
+			<% end %>
+		</ul>
+	</p>
+
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

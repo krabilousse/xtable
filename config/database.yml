@@ -35,6 +35,6 @@ production:
   encoding: utf8
   database: xtable
   pool: 5
-  username: root
-  password: "root"
+  username: devweb
+  password: "devweb"
   socket: /var/run/mysqld/mysqld.sock

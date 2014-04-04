@@ -1,5 +1,9 @@
 Xtable::Application.routes.draw do
-  resources :groups
+  resources :groups do
+    collection do
+      get 'search'
+    end
+  end
 
   resources :events
 

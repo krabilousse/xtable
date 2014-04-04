@@ -4,6 +4,7 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
+    @emptySearch=Group.new
     @groups = Group.paginate(page: params[:page])
   end
 
@@ -65,6 +66,12 @@ class GroupsController < ApplicationController
       format.html { redirect_to groups_url }
       format.json { head :no_content }
     end
+  end
+  
+  def search
+    @emptySearch=Group.new
+    @search=Group.where("name LIKE :keyword OR description like :keyword", :keyword => "%#{group_params[:name]}%").paginate(page: params[:page])
+    
   end
   
   private
