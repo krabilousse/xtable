@@ -235,7 +235,7 @@ Devise.setup do |config|
   config.omniauth :github, APP_CONFIG['app_id_github'], APP_CONFIG['secret_key_github'], scope: 'user'
   
   require "omniauth-google-oauth2"
-  config.omniauth :google_oauth2, APP_CONFIG['app_id_google'], APP_CONFIG['secret_key_google'], {}  
+  config.omniauth :google_oauth2, APP_CONFIG['app_id_google'], APP_CONFIG['secret_key_google']
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
