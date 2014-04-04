@@ -8,7 +8,7 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>Subscribe</th>
+      <th class="text-center">Subscribe</th>
     </tr>
   </thead>
 
@@ -17,7 +17,7 @@
       <tr>
         <td><%= link_to group.name, group %></td>
         <td><%= group.description %></td>
-        <td>+</td>
+        <td class="text-center"><%= link_to icon("plus-circle"), group_subscribe_path(group.id) %></td>
       </tr>
     <% end %>
   </tbody>
