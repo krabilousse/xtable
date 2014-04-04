@@ -38,12 +38,29 @@
 							<%= link_to "Home", root_path %>
 						</li>
 						<% if user_signed_in? then %>
-							<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'groups' %>">
-								<%= link_to "Groups", groups_path %>
-							</li>
-							<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'private_content' %>">
-								<%= link_to "Private", private_content_path %>
-							</li>
+						<li class="dropdown <%= 'active' if params[:controller] == 'groups' %>">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Groups <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li class="<%= 'active' if params[:controller] == 'groups' && params[:action] == 'index' %>">
+									<%= link_to "Show all", groups_path %>
+								</li>
+								<li class="<%= 'active' if params[:controller] == 'groups' && params[:action] == 'new' %>">
+									<%= link_to "New group", new_group_path %>
+								</li>
+							</ul>
+						</li>	
+						<li class="dropdown <%= 'active' if params[:controller] == 'events' %>">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li class="<%= 'active' if params[:controller] == 'events' && params[:action] == 'index' %>">
+									<%= link_to "Show all", events_path %>
+								</li>
+								<li class="<%= 'active' if params[:controller] == 'events' && params[:action] == 'new' %>">
+									<%= link_to "New event", new_event_path %>
+								</li>
+							</ul>
+						</li>					
+						
 						<% end %>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -55,7 +72,7 @@
 						<% end %>
 						<% if current_user.name? then %>
 						<li>
-							<%= link_to(current_user.name, edit_user_registration_path) %>																					
+							<%= link_to(current_user.name, edit_user_registration_path) %>
 						</li>
 						<% end %>
 						<li>
@@ -69,7 +86,7 @@
 						</li>
 						<li>
 							<%= link_to(icon('facebook'), user_omniauth_authorize_path(provider: :facebook)) %>
-						</li>						
+						</li>
 						<li>
 							<%= link_to(icon('github'), user_omniauth_authorize_path(provider: :github)) %>
 						</li>
@@ -94,7 +111,7 @@
 					<%= alert %>
 				</p>
 			</div>
-			<% end %>			
+			<% end %>
 
 			<%= yield %>
 		</div><!-- /.container -->
