@@ -8,9 +8,7 @@ class EventsController < ApplicationController
     
     startD = Time.at(params[:start].to_f).to_datetime
     endD = Time.at(params[:end].to_f).to_datetime
-        
-    
-        
+  
     respond_to do |format|
       format.json {
         render json: @events
