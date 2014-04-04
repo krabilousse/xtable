@@ -1,6 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   skip_before_filter :authenticate_user!
+  
   def all
     p env["omniauth.auth"]
     user = User.from_omniauth(env["omniauth.auth"])
