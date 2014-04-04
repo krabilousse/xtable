@@ -4,8 +4,7 @@
 
 <h1><%= @group.name %></h1>
 
-<p></p>
-<a class="btn btn-primary">Subscribe now !</a>
+<%= link_to 'Subscribe now !', group_subscribe_path(@group) %>
 
 <h2>What ?</h2>
 <p>
@@ -29,7 +28,7 @@
 	<tr>
 		<th>Members</th>
 	</tr>
-	<% @members.each do |member| %>
+	<% @admins.each do |member| %>
 	<tr>
 		<td><%= member.name %></td>
 	</tr>

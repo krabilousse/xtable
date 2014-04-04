@@ -3,6 +3,7 @@ Xtable::Application.routes.draw do
     collection do
       get 'search'
     end
+    get 'subscribe'
   end
 
   resources :events
