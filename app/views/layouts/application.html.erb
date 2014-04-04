@@ -37,12 +37,14 @@
 						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'home' %>">
 							<%= link_to "Home", root_path %>
 						</li>
-						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'groups' %>">
-							<%= link_to "Groups", groups_path %>
-						</li>
-						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'private_content' %>">
-							<%= link_to "Private", private_content_path %>
-						</li>
+						<% if user_signed_in? then %>
+							<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'groups' %>">
+								<%= link_to "Groups", groups_path %>
+							</li>
+							<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'private_content' %>">
+								<%= link_to "Private", private_content_path %>
+							</li>
+						<% end %>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<% if user_signed_in? then %>
