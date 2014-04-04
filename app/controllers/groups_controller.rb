@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
   # before_filter :authenticate_user!
   # GET /groups
   # GET /groups.json
@@ -15,7 +16,7 @@ class GroupsController < ApplicationController
     @events = @group.events
     @users = @group.users
     @followers = @users
-    @members = @users.joins(:roles).where("roles.name=?","Member")
+    @admins = @users.joins(:roles).where("roles.name=?","Admin")
   end
 
   # GET /groups/new
@@ -70,8 +71,22 @@ class GroupsController < ApplicationController
   
   def search
     @emptySearch=Group.new
-    @search=Group.where("name LIKE :keyword OR description LIKE :keyword", :keyword => "%#{group_params[:name]}%").paginate(page: params[:page])
+    @search=Group.where("name LIKE :keyword OR description LIKE :keyword", :keyword => "%#{group_params[:name]}%").paginate(page: params[:page])  
+  end
+  
+  def subscribe
+    @group = Group.find(params[:group_id])
     
+    begin
+    @group.users << current_user
+    if @group.save
+      redirect_to @group, notice: 'Subscription ok'
+    else
+      redirect_to @group, notice: 'Subscription problem'
+    end
+    rescue
+      redirect_to @group, notice: 'Subscription problem'
+    end
   end
   
   private
