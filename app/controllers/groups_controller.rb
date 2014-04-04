@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
   # GET /groups.json
   def index
     @emptySearch=Group.new
-    @groups = Group.paginate(page: params[:page])
+    @groups = Group.where(isPrivate: false).paginate(page: params[:page])
   end
 
   # GET /groups/1
@@ -82,6 +82,6 @@ class GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:name, :events_id, :tags_id, :description)
+      params.require(:group).permit(:name, :events_id, :tags_id, :description, :isPrivate)
     end
 end

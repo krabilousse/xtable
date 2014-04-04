@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328123900) do
+ActiveRecord::Schema.define(version: 20140404121035) do
 
   create_table "events", force: true do |t|
     t.string   "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20140328123900) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "isPrivate"
   end
 
   create_table "groups_tags", id: false, force: true do |t|
