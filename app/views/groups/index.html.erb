@@ -17,7 +17,11 @@
       <tr>
         <td><%= link_to group.name, group %></td>
         <td><%= group.description %></td>
-        <td class="text-center"><%= link_to icon("plus-circle"), group_subscribe_path(group.id) %></td>
+        <% if group.users.include? current_user %>
+          <td class="text-center"><%= link_to icon("minus-circle"), group_unsubscribe_path(group.id) %></td>
+        <% else %>
+          <td class="text-center"><%= link_to icon("plus-circle"), group_subscribe_path(group.id) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

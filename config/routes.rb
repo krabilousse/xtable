@@ -4,6 +4,7 @@ Xtable::Application.routes.draw do
       get 'search'
     end
     get 'subscribe'
+    get 'unsubscribe'
   end
 
   resources :events do

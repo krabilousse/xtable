@@ -17,7 +17,11 @@ class GroupsController < ApplicationController
     @users = @group.users
     @followers = @users
     adminRole = Role.where(name: 'Admin')
-    @admin = UserRole.where(role_id: adminRole, group_id: @group).first.user
+    @admin = User.new
+    ur = UserRole.where(role_id: adminRole, group_id: @group).first
+    if ur != nil
+      @admin = ur.user
+    end
     
     #calendar stuff
     startD = Time.at(params[:start].to_f).to_datetime
@@ -92,8 +96,7 @@ class GroupsController < ApplicationController
   end
   
   def subscribe
-    @group = Group.find(params[:group_id])
-    
+    @group = Group.find(params[:group_id])    
     begin
     @group.users << current_user
     if @group.save
@@ -104,6 +107,12 @@ class GroupsController < ApplicationController
     rescue
       redirect_to @group, notice: 'Subscription problem'
     end
+  end
+  
+  def unsubscribe
+    @group = Group.find(params[:group_id])
+    @group.users.delete(current_user)
+    redirect_to @group, notice: 'Unsubscription ok'
   end
   
   private
