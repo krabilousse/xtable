@@ -13,27 +13,18 @@
 <table class="table table-hover">
 	<tr>
 		<th>Event</th>
-		<th>Subscribe</th>
+		<th class="text-center">Subscribe</th>
 	</tr>
 	<% @events.each do |event| %>
 	<tr>
 		<td><%= link_to event.name, event %></td>
-		<td>+</td>
+        <td class="text-center"><%= link_to icon("plus-circle"), group_subscribe_path(event.id) %></td>
 	</tr>
 	<% end %>
 </table>
 
 <h2>Who's the boss ?</h2>
-<table class="table table-hover">
-	<tr>
-		<th>Admins</th>
-	</tr>
-	<% @admins.each do |member| %>
-	<tr>
-		<td><%= member.name %></td>
-	</tr>
-	<% end %>
-</table>
+<%= @admin.name %>
 
 <h2>Who like that ?</h2>
 <table class="table table-hover">

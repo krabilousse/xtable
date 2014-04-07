@@ -16,7 +16,8 @@ class GroupsController < ApplicationController
     @events = @group.events
     @users = @group.users
     @followers = @users
-    @admins = @users.joins(:roles).where("roles.name=?","Admin")
+    adminRole = Role.where(name: 'Admin')
+    @admin = UserRole.where(role_id: adminRole, group_id: @group).first.user
   end
 
   # GET /groups/new
@@ -33,9 +34,13 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
+    ur = UserRole.new
+    ur.user = current_user
+    ur.group = @group
+    ur.role = Role.where(name: 'Admin').first
 
     respond_to do |format|
-      if @group.save
+      if @group.save && ur.save
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render action: 'show', status: :created, location: @group }
       else
