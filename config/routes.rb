@@ -6,11 +6,15 @@ Xtable::Application.routes.draw do
     get 'subscribe'
   end
 
-  resources :events
+  resources :events do
+    collection do
+      get 'search'
+    end
+    get 'participate'
+  end
 
   root to: "staticcontent#home"
   
-  get "/private" => "staticcontent#private_content", as: "private_content" 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }, skip: [:registrations, :sessions]
   
   

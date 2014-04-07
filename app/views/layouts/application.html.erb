@@ -30,13 +30,10 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">xTable</a>
+					<%= link_to "xTable", root_path, class: 'navbar-brand'%>
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="<%= 'active' if params[:controller] == 'staticcontent' && params[:action] == 'home' %>">
-							<%= link_to "Home", root_path %>
-						</li>
 						<% if user_signed_in? then %>
 						<li class="dropdown <%= 'active' if params[:controller] == 'groups' %>">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Groups <b class="caret"></b></a>

@@ -1,11 +1,12 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, only: [:index]
+  before_filter :authenticate_user!
   # GET /events
   # GET /events.json
   def index
+    @emptySearch=Group.new
     @events = Event.all
-    
+    @paginated_events = Event.all.paginate(page: params[:page])
     startD = Time.at(params[:start].to_f).to_datetime
     endD = Time.at(params[:end].to_f).to_datetime
   
@@ -78,6 +79,26 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def search
+    @emptySearch=Event.new
+    @search=Event.where("name LIKE :keyword OR description LIKE :keyword", :keyword => "%#{event_params[:name]}%").paginate(page: params[:page])  
+  end
+  
+  def participate
+    @event = Event.find(params[:event_id])
+    
+    begin
+    @event.users << current_user
+    if @event.save and not @event.users.include? current_user
+      redirect_to @event, notice: 'Participation ok !'
+    else
+      redirect_to @event, notice: 'Participation problem'
+    end
+    rescue
+      redirect_to @event, notice: 'Participation problem'
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -87,6 +108,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :description, :startDate, :endDate, :location, :users_id)
+      params.require(:event).permit(:name, :description, :startDate, :endDate, :location)
     end
 end

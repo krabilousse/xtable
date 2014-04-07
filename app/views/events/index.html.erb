@@ -1,6 +1,9 @@
 <h1>Listing events</h1>
 
-<table>
+<%= render 'search' %>
+<br/>
+
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Name</th>
@@ -8,30 +11,28 @@
       <th>Startdate</th>
       <th>Enddate</th>
       <th>Location</th>
-      <th>Users</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Participants</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @events.each do |event| %>
+    <% @paginated_events.each do |event| %>
       <tr>
         <td><%= event.name %></td>
         <td><%= event.description %></td>
         <td><%= event.startDate %></td>
         <td><%= event.endDate %></td>
         <td><%= event.location %></td>
-        <td><%= event.users %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+        	<span class="glyphicon glyphicon-user"></span> <%= event.users.size %> participant(s)
+        
+    	</td>
+        <td><%= link_to icon('plus-circle'), event_participate_path(event.id) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
+<%= will_paginate @paginated_events, renderer: BootstrapPagination::Rails %>
 <br>
 
 <%= link_to 'New Event', new_event_path %>

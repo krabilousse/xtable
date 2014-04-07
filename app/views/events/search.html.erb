@@ -1,0 +1,28 @@
+<h1>Search results</h1>
+
+<%= render 'search' %>
+<br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Participate</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @search.each do |event| %>
+      <tr>
+        <td><%= link_to event.name, event %></td>
+        <td><%= event.description %></td>
+        <td>+</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @search, renderer: BootstrapPagination::Rails %>
+
+<br>
