@@ -18,6 +18,18 @@ class GroupsController < ApplicationController
     @followers = @users
     adminRole = Role.where(name: 'Admin')
     @admin = UserRole.where(role_id: adminRole, group_id: @group).first.user
+    
+    #calendar stuff
+    startD = Time.at(params[:start].to_f).to_datetime
+    endD = Time.at(params[:end].to_f).to_datetime
+  
+    respond_to do |format|
+      format.json {
+        render json: @events
+        .where(:startDate => startD.to_time..endD.to_time)
+        }
+      format.html { render :action => 'show'}
+    end
   end
 
   # GET /groups/new
