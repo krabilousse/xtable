@@ -36,7 +36,7 @@
 <h2>Who like that ?</h2>
 <table class="table table-hover">
 	<tr>
-		<th>Followers</th>
+		<th><span class="glyphicon glyphicon-user"></span> <%= pluralize(@followers.size, "follower") %> </th>
 	</tr>
 	<% @followers.each do |follower| %>
 	<tr>
