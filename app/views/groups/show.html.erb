@@ -5,10 +5,12 @@
 </p>
 
 <h1><%= @group.name %></h1>
-<%if @users.include? current_user %>
-<%= link_to 'Unsubscribe now !', group_unsubscribe_path(@group), class: "btn btn-primary"  %>
-<% else %>
-<%= link_to 'Subscribe now !', group_subscribe_path(@group), class: "btn btn-primary"  %>
+<% if current_user != @admin %>
+  <%if @users.include? current_user %>
+    <%= link_to 'Unsubscribe now !', group_unsubscribe_path(@group), class: "btn btn-primary"  %>
+  <% else %>
+    <%= link_to 'Subscribe now !', group_subscribe_path(@group), class: "btn btn-primary"  %>
+  <% end %>
 <% end %>
 
 <h2>What ?</h2>
