@@ -8,16 +8,26 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th class="text-center">Subscribe</th>
+      <th class="text-center">Subscribe/Unsubscribe</th>
     </tr>
   </thead>
 
   <tbody>
     <% @groups.each do |group| %>
+      <%
+      adminRole = Role.where(name: 'Admin')
+      admin = User.new
+      ur = UserRole.where(role_id: adminRole, group_id: group).first
+      if ur != nil
+        admin = ur.user
+      end
+      %>
       <tr>
         <td><%= link_to group.name, group %></td>
         <td><%= group.description %></td>
-        <% if group.users.include? current_user %>
+        <% if current_user == admin %>
+          <td class="text-center"> Admin </td>
+        <% elsif group.users.include? current_user %>
           <td class="text-center"><%= link_to icon("minus-circle"), group_unsubscribe_path(group.id) %></td>
         <% else %>
           <td class="text-center"><%= link_to icon("plus-circle"), group_subscribe_path(group.id) %></td>
