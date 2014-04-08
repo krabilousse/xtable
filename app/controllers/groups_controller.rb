@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :checkIsAdmin, except: [:show, :index, :create, :new]
   # before_filter :authenticate_user!
   # GET /groups
   # GET /groups.json
@@ -113,6 +114,19 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:group_id])
     @group.users.delete(current_user)
     redirect_to @group, notice: 'Unsubscription ok'
+  end
+  
+  def checkIsAdmin
+    group = Group.find(params[:id])
+    adminRole = Role.where(name: 'Admin')
+    admin = User.new
+    ur = UserRole.where(role_id: adminRole, group_id: group).first
+    if ur != nil
+      admin = ur.user
+    end
+    if current_user != admin
+      redirect_to group, notice: 'Permission denied'
+    end
   end
   
   private
