@@ -1,4 +1,6 @@
 Xtable::Application.routes.draw do
+  resources :group_invitations
+
   resources :groups do
     collection do
       get 'search'
