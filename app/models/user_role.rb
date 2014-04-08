@@ -3,4 +3,9 @@ class UserRole < ActiveRecord::Base
   belongs_to :group
   belongs_to :role
   validates_uniqueness_of :user, :scope => :group
+  validates_uniqueness_of :user, :scope => :role
+  
+  validates :user, presence: true
+  validates :group, presence: true
+  validates :role, presence: true
 end

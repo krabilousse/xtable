@@ -1,6 +1,4 @@
-Xtable::Application.routes.draw do
-  resources :group_invitations
-
+Xtable::Application.routes.draw do  
   resources :groups do
     collection do
       get 'search'
@@ -14,6 +12,11 @@ Xtable::Application.routes.draw do
       get 'search'
     end
     get 'participate'
+  end
+  
+  resources :group_invitations do    
+    get 'accept'
+    get 'refuse'
   end
 
   root to: "staticcontent#home"

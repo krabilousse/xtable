@@ -36,7 +36,7 @@
 					<ul class="nav navbar-nav">
 						<% if user_signed_in? then %>
 						<li class="dropdown <%= 'active' if params[:controller] == 'groups' %>">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Groups <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= icon('group', 'Groups')%> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li class="<%= 'active' if params[:controller] == 'groups' && params[:action] == 'index' %>">
 									<%= link_to "Show all", groups_path %>
@@ -47,7 +47,7 @@
 							</ul>
 						</li>	
 						<li class="dropdown <%= 'active' if params[:controller] == 'events' %>">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= icon('calendar', 'Events')%> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li class="<%= 'active' if params[:controller] == 'events' && params[:action] == 'index' %>">
 									<%= link_to "Show all", events_path %>
@@ -56,6 +56,13 @@
 									<%= link_to "New event", new_event_path %>
 								</li>
 							</ul>
+						</li>
+						<li class="<%= 'active' if params[:controller] == 'group_invitations' %>">							
+							<% if current_user.group_invitations.count > 0 %>
+								<%= link_to(icon('envelope', 'Invitations') + raw(' <span class="badge">') + current_user.group_invitations.count.to_s + raw('</span>'), group_invitations_path) %>								
+							<% else %>
+								<%= link_to(icon('envelope', 'Invitations'), group_invitations_path) %>
+							<% end %>
 						</li>					
 						
 						<% end %>

@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :roles, :through => :user_roles
   has_many :events, :through => :groups, dependent: :destroy  
   
+  has_many :group_invitations, dependent: :destroy
+  
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -38,7 +40,7 @@ class User < ActiveRecord::Base
     g = Group.new
     g.users << self
     g.save
-  end
+  end  
   
   after_create :create_user_bound_group
 end
