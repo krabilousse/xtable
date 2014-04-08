@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :checkIsAdmin, except: [:show, :index, :create, :new]
+  before_action :checkIsAdmin, except: [:show, :index, :create, :new, :search]
   # before_filter :authenticate_user!
   # GET /groups
   # GET /groups.json

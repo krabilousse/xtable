@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @emptySearch=Group.new
+    @emptySearch=Event.new
     @events = Event.all
     @paginated_events = Event.all.paginate(page: params[:page])
     startD = Time.at(params[:start].to_f).to_datetime
@@ -108,6 +108,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :description, :startDate, :endDate, :location)
+      params.require(:event).permit(:name, :description, :startDate, :endDate, :location, :page)
     end
 end
