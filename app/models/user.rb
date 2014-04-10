@@ -36,7 +36,11 @@ class User < ActiveRecord::Base
   
   def create_user_bound_group
     g = Group.new
-    g.users << self
+    ur = UserRole.new
+    ur.user = self
+    ur.group = g
+    ur.role = Role.where(name: 'Admin').first
+    ur.save
     g.save
   end
   

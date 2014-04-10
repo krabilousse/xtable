@@ -18,9 +18,6 @@ class EventsController < ApplicationController
         }
       format.html { render :action => "index"}
     end
-    
-    
-    
   end
 
   # GET /events/1
@@ -44,6 +41,10 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(event_params)
+    
+    @event.users << current_user
+    
+    @event.group = Group.find(event_params[:group_id])
 
     respond_to do |format|
       if @event.save
@@ -108,6 +109,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :description, :startDate, :endDate, :location, :page)
+      params.require(:event).permit(:name, :description, :startDate, :endDate, :location, :page, :format,:group_id)
     end
 end
