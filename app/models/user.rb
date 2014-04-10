@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :roles, :through => :user_roles
   has_many :events, :through => :groups, dependent: :destroy  
   
+  has_many :group_invitations, dependent: :destroy
+  
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -34,6 +36,22 @@ class User < ActiveRecord::Base
     end    
   end
   
+  def pending_group_invitations
+    group_invitations.where(group_invitation_status: GroupInvitationStatus.pending)
+  end
+  
+  def accepted_group_invitations
+    group_invitations.where(group_invitation_status: GroupInvitationStatus.accepted)
+  end
+  
+  def refused_group_invitations
+    group_invitations.where(group_invitation_status: GroupInvitationStatus.refused)
+  end
+  
+  def is_in_group?(group)
+    groups.include?(group)
+  end
+  
   def create_user_bound_group
     g = Group.new
     ur = UserRole.new
@@ -42,7 +60,7 @@ class User < ActiveRecord::Base
     ur.role = Role.where(name: 'Admin').first
     ur.save
     g.save
-  end
+  end  
   
   after_create :create_user_bound_group
 end

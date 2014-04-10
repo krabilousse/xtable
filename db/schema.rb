@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404121035) do
+ActiveRecord::Schema.define(version: 20140410165748) do
 
   create_table "events", force: true do |t|
     t.string   "name"
@@ -30,6 +30,24 @@ ActiveRecord::Schema.define(version: 20140404121035) do
     t.integer "event_id"
     t.integer "user_id"
   end
+
+  create_table "group_invitation_statuses", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "group_invitations", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "group_invitation_status_id"
+  end
+
+  add_index "group_invitations", ["group_id"], name: "index_group_invitations_on_group_id", using: :btree
+  add_index "group_invitations", ["group_invitation_status_id"], name: "index_group_invitations_on_group_invitation_status_id", using: :btree
+  add_index "group_invitations", ["user_id"], name: "index_group_invitations_on_user_id", using: :btree
 
   create_table "groups", force: true do |t|
     t.string   "name"

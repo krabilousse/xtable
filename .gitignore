@@ -56,3 +56,4 @@ pickle-email-*.html
 Capfile
 config/deploy.rb
 config/deploy/
+/lib/capistrano

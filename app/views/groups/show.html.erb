@@ -36,7 +36,7 @@
 <h2>Who like that ?</h2>
 <table class="table table-hover">
 	<tr>
-		<th>Followers</th>
+		<th><span class="glyphicon glyphicon-user"></span> <%= pluralize(@followers.size, "follower") %> </th>
 	</tr>
 	<% @followers.each do |follower| %>
 	<tr>
@@ -47,10 +47,9 @@
 </table>
 
 <% if current_user == @admin %>
-    <%= link_to 'Delete', @group, method: 'delete' %> |
-	<%= link_to 'Edit', edit_group_path(@group) %> |
+    <%= link_to icon('trash-o fa-lg', 'Delete'), @group, method: 'delete', class: "btn btn-danger" %>
+	<%= link_to icon('edit fa-lg', 'Edit'), edit_group_path(@group), class: "btn btn-warning" %>
 <% end %>
-<%= link_to 'Back', groups_path %>
 </div>
 <script>
 	$(document).ready(function() { 
