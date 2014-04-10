@@ -6,7 +6,7 @@ class Group < ActiveRecord::Base
   
   self.per_page=2
   
-  def is_admin(user)
+  def is_admin?(user)
     admin_role = Role.where(name: "Admin").first
     ur = user_roles.where(user: user, role: admin_role)
     

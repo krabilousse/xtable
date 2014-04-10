@@ -58,8 +58,8 @@
 							</ul>
 						</li>
 						<li class="<%= 'active' if params[:controller] == 'group_invitations' %>">							
-							<% if current_user.group_invitations.count > 0 %>
-								<%= link_to(icon('envelope', 'Invitations') + raw(' <span class="badge">') + current_user.group_invitations.count.to_s + raw('</span>'), group_invitations_path) %>								
+							<% if current_user.pending_group_invitations.count > 0 %>
+								<%= link_to(icon('envelope', 'Invitations') + raw(' <span class="badge">') + current_user.pending_group_invitations.count.to_s + raw('</span>'), group_invitations_path) %>								
 							<% else %>
 								<%= link_to(icon('envelope', 'Invitations'), group_invitations_path) %>
 							<% end %>

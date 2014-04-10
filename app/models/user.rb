@@ -36,6 +36,22 @@ class User < ActiveRecord::Base
     end    
   end
   
+  def pending_group_invitations
+    group_invitations.where(group_invitation_status: GroupInvitationStatus.pending)
+  end
+  
+  def accepted_group_invitations
+    group_invitations.where(group_invitation_status: GroupInvitationStatus.accepted)
+  end
+  
+  def refused_group_invitations
+    group_invitations.where(group_invitation_status: GroupInvitationStatus.refused)
+  end
+  
+  def is_in_group?(group)
+    groups.include?(group)
+  end
+  
   def create_user_bound_group
     g = Group.new
     g.users << self
