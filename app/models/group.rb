@@ -13,6 +13,10 @@ class Group < ActiveRecord::Base
     ur.size > 0    
   end
   
+  def users_not_following(user)
+    User.all - self.users - [user]
+  end
+  
   def add_follower(user)    
     begin
       self.add_user(user, "Follower")

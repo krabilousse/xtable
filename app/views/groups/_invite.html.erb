@@ -1,4 +1,5 @@
-<%= bootstrap_form_for(@group_invitation) do |f| %>
+<%= bootstrap_form_for(@group_invitation, layout: :horizontal) do |f| %>
 	<%= f.collection_select :user_id, @users_to_invite, :id, :name %>
+	<%= f.hidden_field :group_id, value: @group.id %>
 	<%= f.submit "Invite", class: "btn btn-primary" %>
 <% end %>

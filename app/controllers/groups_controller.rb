@@ -17,7 +17,7 @@ class GroupsController < ApplicationController
     @events = @group.events
     @users = @group.users
     @followers = @users
-    @users_to_invite = User.all.select('id, name')
+    @users_to_invite = @group.users_not_following(current_user)
     @group_invitation = GroupInvitation.new
     @group_invitation.group = @group
     
