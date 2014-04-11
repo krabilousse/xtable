@@ -1,4 +1,5 @@
 /* ===================================================
+ * Basé sur
  * zCalendarWrapper.js v0.2.0
  * https://github.com/evolic/zf2-tutorial/blob/calendar/public/js/evl-calendar/zCalendarWrapper.js
  * ===================================================
@@ -69,7 +70,8 @@ function zCalendarWrapper(config) {
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
-        editable: true,
+        defaultView: 'agendaWeek',
+        editable: false,
         selectable: true,
         selectHelper: true,
         firstDay: 1, // start week from Monday
@@ -80,7 +82,7 @@ function zCalendarWrapper(config) {
         axisFormat: 'H:mm',
         slotMinutes: 15,
         snapMinutes: 15,
-        defaultEventMinutes: 45,
+        defaultEventMinutes: 60,
         select: function( startDate, endDate, allDay, jsEvent, view ) {
             createEvent( startDate, endDate, allDay, jsEvent, view );
         },
@@ -123,7 +125,10 @@ function zCalendarWrapper(config) {
     function createEvent( startDate, endDate, allDay, jsEvent, view ) {
         var ts = new Date().getTime();
 
-        bootbox.prompt(translate('Event Title:'), function(title) {
+        bootbox.confirm("<form id='infos' action=''>\
+    First name:<input type='text' name='first_name'></input><br/>\
+    Last name:<input type='text' name='last_name'></input>\
+    </form>", function(title) {
             if (title) {
                 startDate = $.fullCalendar.formatDate(startDate, format);
                 endDate = $.fullCalendar.formatDate(endDate, format);
@@ -140,32 +145,28 @@ function zCalendarWrapper(config) {
                     },
                     type: "POST",
                     success: function( response ) {
-                        if (response.success) {
-                            bootbox.alert(response.message, function() {});
                             var events = calendar.fullCalendar('clientEvents');
-
                             for (var i in events) {
                                 if (typeof(events[i].ts) !== 'undefined' && events[i].ts == response.ts) {
                                     events[i].id = parseInt(response.id);
                                     delete events[i].ts;
                                 }
                             }
-                        } else {
-                            bootbox.alert(response.message, function() {});
-                        }
+		                calendar.fullCalendar('renderEvent', {
+		                    title: title,
+		                    start: response.startDate,
+		                    end: response.endDate,
+		                    allDay: false,
+		                    ts:ts,
+		                    id:response.id
+		                }, true); // make the event "stick"
+		                console.log(startDate,endDate);
+                            
                     },
                     error: function( jqXHR, textStatus, errorThrown ) {
-                        bootbox.alert('Error occured during saving event in the database', function() {});
+                        bootbox.alert('Error occured during saving event in the database\n'+errorThrown, function() {});
                     }
                 });
-                calendar.fullCalendar('renderEvent', {
-                    title: title,
-                    start: startDate,
-                    end: endDate,
-                    allDay: allDay,
-                    backgroundColor: color,
-                    ts: ts
-                }, true); // make the event "stick"
             }
         });
         calendar.fullCalendar('unselect');
@@ -281,23 +282,33 @@ function zCalendarWrapper(config) {
      * @private
      */
     function clickEvent ( event ) {
-        bootbox.dialog(translate('What do you want to do with event `%s`?').replace('%s', event.title), [{
-            "label" : translate('Delete'),
-            "class" : "btn-danger",
-            "callback": function() {
-                console.log("uh oh, look out!");
-                deleteEvent ( event );
-            }
-        }, {
-            "label" : translate('Edit'),
-            "class" : "btn-primary",
-            "callback": function() {
-                console.log("Primary button");
-                editEvent ( event );
-            }
-        }, {
-            "label" : translate('Cancel')
-        }]);
+        bootbox.dialog({
+		  message: "I am a custom dialog",
+		  title: "Custom title",
+		  buttons: {
+		    success: {
+		      label: "Success!",
+		      className: "btn-success",
+		      callback: function() {
+		        Example.show("great success");
+		      }
+		    },
+		    danger: {
+		      label: "Danger!",
+		      className: "btn-danger",
+		      callback: function() {
+		        Example.show("uh oh, look out!");
+		      }
+		    },
+		    main: {
+		      label: "Click ME!",
+		      className: "btn-primary",
+		      callback: function() {
+		        Example.show("Primary button");
+		      }
+		    }
+		  }
+		});
     }
 
     /**
@@ -307,7 +318,15 @@ function zCalendarWrapper(config) {
             return text;
         
     }
-    
+    function isOverlapping(event){
+	    var array = calendar.fullCalendar('clientEvents');
+	    for(i in array){
+	        if(!(array[i].start >= event.end || array[i].end <= event.start)){
+	            return true;
+	        }
+	    }
+    	return false;
+    }
     // ************************************************************************ 
     // PRIVILEGED METHODS 
     // MAY BE INVOKED PUBLICLY AND MAY ACCESS PRIVATE ITEMS 
