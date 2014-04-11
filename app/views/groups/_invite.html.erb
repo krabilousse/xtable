@@ -3,4 +3,4 @@
 	<%= f.hidden_field :group_id, value: @group.id %>
 	<%= f.submit "Invite", class: "btn btn-primary" %>
 <% end %>
-<%= javascript_include_tag "groups" %>
+<%= javascript_include_tag "groups", "data-turbolinks-track" => false %>
