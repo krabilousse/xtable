@@ -99,7 +99,7 @@ class GroupsController < ApplicationController
   def subscribe
     @group = Group.find(params[:group_id])    
     begin
-    @group.users << current_user
+    @group.add_follower(current_user)
     if @group.save
       redirect_to @group, notice: 'Subscription ok'
     else
