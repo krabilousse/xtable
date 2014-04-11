@@ -7,7 +7,9 @@ class GroupsController < ApplicationController
   # GET /groups.json
   def index
     @emptySearch=Group.new
-    @groups = Group.where(isPrivate: false).paginate(page: params[:page])
+    #to array conversion
+    ids = current_user.groups + []
+    @groups = Group.where("isPrivate=false OR id IN(?)", ids).paginate(page: params[:page])
   end
 
   # GET /groups/1
