@@ -55,17 +55,13 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-    ur = UserRole.new
-    ur.user = current_user
-    ur.group = @group
-    ur.role = Role.where(name: 'Admin').first
 
     respond_to do |format|
-      if @group.save && ur.save
+      if @group.save && @group.add_admin(current_user)
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render action: 'show', status: :created, location: @group }
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new' , notice: 'Failed to create group.'}
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
@@ -103,7 +99,7 @@ class GroupsController < ApplicationController
   def subscribe
     @group = Group.find(params[:group_id])    
     begin
-    @group.users << current_user
+    @group.add_follower(current_user)
     if @group.save
       redirect_to @group, notice: 'Subscription ok'
     else
