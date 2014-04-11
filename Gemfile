@@ -67,6 +67,9 @@ gem 'will_paginate-bootstrap'
 # Forms
 gem 'bootstrap_form'
 
+# Chosen
+gem 'chosen-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

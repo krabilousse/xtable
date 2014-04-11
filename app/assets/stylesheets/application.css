@@ -13,7 +13,8 @@
  *= require fullcalendar
  *= require bootstrap
  *= require font-awesome
- *= require rails_bootstrap_forms 
+ *= require chosen
+ *= require rails_bootstrap_forms
  */
 
 body {
