@@ -15,12 +15,7 @@
   <tbody>
     <% @groups.each do |group| %>
       <%
-      adminRole = Role.where(name: 'Admin')
-      admin = User.new
-      ur = UserRole.where(role_id: adminRole, group_id: group).first
-      if ur != nil
-        admin = ur.user
-      end
+      admin = group.get_admin
       %>
       <tr>
         <td><%= link_to group.name, group %></td>
