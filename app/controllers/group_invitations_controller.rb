@@ -38,7 +38,7 @@ class GroupInvitationsController < ApplicationController
         format.html { redirect_to group, notice: 'Group invitation was successfully created.' }
         format.json { render action: 'show', status: :created, location: @group_invitation }
       else
-        format.html { render action: 'index' }
+        format.html { render action: 'index', notice: 'Error while creating group invitation.' }
         format.json { render json: @group_invitation.errors, status: :unprocessable_entity }
       end
     end
