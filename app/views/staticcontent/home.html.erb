@@ -16,8 +16,10 @@
 		var calendarWrapper = new zCalendarWrapper({
 			container: '#calendar',
 			api: {
-				get: "<%= events_path %>.json"
-			}
+				get: "<%= events_path %>.json",
+				add: "<%= events_path %>.json"
+			},
+			group_id: <%= current_user.groups.first.id %>
 		});
 	}) ;
 </script>

@@ -17,6 +17,10 @@ class GroupsController < ApplicationController
     @events = @group.events
     @users = @group.users
     @followers = @users
+    @users_to_invite = User.all.select('id, name')
+    @group_invitation = GroupInvitation.new
+    @group_invitation.group = @group
+    
     adminRole = Role.where(name: 'Admin')
     @admin = User.new
     ur = UserRole.where(role_id: adminRole, group_id: @group).first

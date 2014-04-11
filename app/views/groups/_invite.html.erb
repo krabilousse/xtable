@@ -1,0 +1,4 @@
+<%= bootstrap_form_for(@group_invitation) do |f| %>
+	<%= f.collection_select :user_id, @users_to_invite, :id, :name %>
+	<%= f.submit "Invite", class: "btn btn-primary" %>
+<% end %>

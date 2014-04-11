@@ -3,6 +3,8 @@ class GroupInvitation < ActiveRecord::Base
   belongs_to :user
   belongs_to :group_invitation_status
   
+  validates :user, presence: true
+  validates :group, presence: true
   validates :group_invitation_status, presence: true
   
   validates_uniqueness_of :user, scope: :group, conditions: -> {where(group_invitation_status: GroupInvitationStatus.pending)}

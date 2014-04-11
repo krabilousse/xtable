@@ -105,6 +105,8 @@ function zCalendarWrapper(config) {
     var cfg = defaults;
     $.extend(true, cfg, config);
 
+	var group_id = config.group_id;
+
     /**
      * @private
      */
@@ -121,7 +123,7 @@ function zCalendarWrapper(config) {
     function createEvent( startDate, endDate, allDay, jsEvent, view ) {
         var ts = new Date().getTime();
 
-        bootbox.prompt(translate('Event Title:'), translate('Cancel'), translate('OK'), function(title) {
+        bootbox.prompt(translate('Event Title:'), function(title) {
             if (title) {
                 startDate = $.fullCalendar.formatDate(startDate, format);
                 endDate = $.fullCalendar.formatDate(endDate, format);
@@ -129,11 +131,12 @@ function zCalendarWrapper(config) {
                 $.ajax({
                     url: api.add,
                     data: {
-                        title: title,
-                        start: startDate,
-                        end: endDate,
-                        all_day: allDay,
-                        ts: ts
+                    	event: {
+	                        name: title,
+	                        startDate: startDate,
+	                        endDate: endDate,
+	                        group_id: group_id
+	                       }
                     },
                     type: "POST",
                     success: function( response ) {
@@ -301,11 +304,8 @@ function zCalendarWrapper(config) {
      * @private
      */
     function translate(text) {
-        if (typeof(locales[text]) !== 'undefined') {
-            return locales[text];
-        } else {
             return text;
-        }
+        
     }
     
     // ************************************************************************ 
