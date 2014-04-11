@@ -17,16 +17,11 @@ class GroupsController < ApplicationController
     @events = @group.events
     @users = @group.users
     @followers = @users
-    @users_to_invite = User.all.select('id, name')
+    @users_to_invite = @group.users_not_following(current_user)
     @group_invitation = GroupInvitation.new
     @group_invitation.group = @group
     
-    adminRole = Role.where(name: 'Admin')
-    @admin = User.new
-    ur = UserRole.where(role_id: adminRole, group_id: @group).first
-    if ur != nil
-      @admin = ur.user
-    end
+    @admin = @group.get_admin
     
     #calendar stuff
     startD = Time.at(params[:start].to_f).to_datetime
@@ -117,16 +112,7 @@ class GroupsController < ApplicationController
   end
   
   def checkIsAdmin
-    group = Group.find(params[:id])
-    adminRole = Role.where(name: 'Admin')
-    admin = User.new
-    ur = UserRole.where(role_id: adminRole, group_id: group).first
-    if ur != nil
-      admin = ur.user
-    end
-    if current_user != admin
-      redirect_to group, notice: 'Permission denied'
-    end
+    @group.is_admin?(current_user)
   end
   
   private

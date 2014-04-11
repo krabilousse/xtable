@@ -14,10 +14,19 @@
 
   <tbody>
     <% @search.each do |group| %>
+      <%
+      admin = group.get_admin
+      %>
       <tr>
         <td><%= link_to group.name, group %></td>
         <td><%= group.description %></td>
-        <td>+</td>
+        <% if current_user == admin %>
+          <td class="text-center"> Admin </td>
+        <% elsif group.users.include? current_user %>
+          <td class="text-center"><%= link_to icon("minus-circle"), group_unsubscribe_path(group.id) %></td>
+        <% else %>
+          <td class="text-center"><%= link_to icon("plus-circle"), group_subscribe_path(group.id) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
