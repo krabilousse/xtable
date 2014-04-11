@@ -2,9 +2,9 @@ class GroupInvitationsController < ApplicationController
   before_action :set_group_invitation, only: [:show, :edit, :update, :destroy]
   before_action :set_group_invitation2, only: [:accept, :refuse]
   before_action :authenticate_user!
-  before_action :check_is_admin, except: [:index, :accept, :refuse]
+  before_action :check_is_admin, except: [:index, :accept, :refuse, :create]
   before_action :check_is_owner, only: [:accept, :refuse]
-  before_action :check_is_in_group, only: [:accept, :refuse, :create]
+  before_action :check_is_in_group, only: [:accept, :refuse]
   # GET /group_invitations
   # GET /group_invitations.json
   def index
@@ -29,11 +29,13 @@ class GroupInvitationsController < ApplicationController
   # POST /group_invitations.json
   def create
     @group_invitation = GroupInvitation.new(group_invitation_params)
-    @gorup_invitation.group_invitation_status = GroupInvitationStatus.pending
+    @group_invitation.group_invitation_status = GroupInvitationStatus.pending
+    
+    group = @group_invitation.group
 
     respond_to do |format|      
       if @group_invitation.save
-        format.html { redirect_to @group_invitation, notice: 'Group invitation was successfully created.' }
+        format.html { redirect_to group, notice: 'Group invitation was successfully created.' }
         format.json { render action: 'show', status: :created, location: @group_invitation }
       else
         format.html { render action: 'index' }
