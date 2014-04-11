@@ -24,7 +24,7 @@ class Group < ActiveRecord::Base
   
   def add_admin(user)
     begin
-      self.add_user(user, "Admin")     
+      self.add_user(user, "Admin")
       true      
     rescue
       false
@@ -36,5 +36,10 @@ class Group < ActiveRecord::Base
     ur = UserRole.create(user: user, role: role, group: self)   
   end
   
+  def get_admin
+    adminRole = Role.where(name: 'Admin').first
+    ur = UserRole.where(role: adminRole, group: self).first
+    ur.user    
+  end
     
 end
