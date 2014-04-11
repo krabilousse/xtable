@@ -100,6 +100,16 @@ class EventsController < ApplicationController
       redirect_to @event, notice: 'Participation problem'
     end
   end
+  
+  def unparticipate
+    @event = Event.find(params[:event_id])
+    begin
+      @event.users.delete(current_user)
+      redirect_to @event, notice: 'Not participating anymore!'
+    rescue
+      redirect_to @event, notice: 'Problem while unparticipating!'
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

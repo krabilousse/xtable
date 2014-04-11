@@ -125,11 +125,20 @@ function zCalendarWrapper(config) {
     function createEvent( startDate, endDate, allDay, jsEvent, view ) {
         var ts = new Date().getTime();
 
-        bootbox.confirm("<form id='infos' action=''>\
-    First name:<input type='text' name='first_name'></input><br/>\
-    Last name:<input type='text' name='last_name'></input>\
-    </form>", function(title) {
-            if (title) {
+        bootbox.confirm('<form role="form">\
+  <div class="form-group" id="input">\
+    <label for="eventName">Event Name</label>\
+    <input type="text" class="form-control" id="eventName" placeholder="Enter event name">\
+  </div>\
+  <div class="form-group">\
+    <label for="eventLocation">Location</label>\
+    <input type="text" class="form-control" id="eventLocation" placeholder="Rue des pythons 9, Sion">\
+  </div>\
+</form>', function(confirm) {
+	
+			title = $('input#eventName').val();
+			location_name = $('input#eventLocation').val();
+            if (title && location_name) {
                 startDate = $.fullCalendar.formatDate(startDate, format);
                 endDate = $.fullCalendar.formatDate(endDate, format);
 
@@ -140,7 +149,8 @@ function zCalendarWrapper(config) {
 	                        name: title,
 	                        startDate: startDate,
 	                        endDate: endDate,
-	                        group_id: group_id
+	                        group_id: group_id,
+	                        location: location_name
 	                       }
                     },
                     type: "POST",
