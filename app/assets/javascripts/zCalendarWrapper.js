@@ -140,32 +140,28 @@ function zCalendarWrapper(config) {
                     },
                     type: "POST",
                     success: function( response ) {
-                        if (response.success) {
-                            bootbox.alert(response.message, function() {});
                             var events = calendar.fullCalendar('clientEvents');
-
                             for (var i in events) {
                                 if (typeof(events[i].ts) !== 'undefined' && events[i].ts == response.ts) {
                                     events[i].id = parseInt(response.id);
                                     delete events[i].ts;
                                 }
                             }
-                        } else {
-                            bootbox.alert(response.message, function() {});
-                        }
+		                calendar.fullCalendar('renderEvent', {
+		                    title: title,
+		                    start: response.startDate,
+		                    end: response.endDate,
+		                    allDay: false,
+		                    ts:ts,
+		                    id:response.id
+		                }, true); // make the event "stick"
+		                console.log(startDate,endDate);
+                            
                     },
                     error: function( jqXHR, textStatus, errorThrown ) {
                         bootbox.alert('Error occured during saving event in the database', function() {});
                     }
                 });
-                calendar.fullCalendar('renderEvent', {
-                    title: title,
-                    start: startDate,
-                    end: endDate,
-                    allDay: allDay,
-                    backgroundColor: color,
-                    ts: ts
-                }, true); // make the event "stick"
             }
         });
         calendar.fullCalendar('unselect');
@@ -307,7 +303,15 @@ function zCalendarWrapper(config) {
             return text;
         
     }
-    
+    function isOverlapping(event){
+	    var array = calendar.fullCalendar('clientEvents');
+	    for(i in array){
+	        if(!(array[i].start >= event.end || array[i].end <= event.start)){
+	            return true;
+	        }
+	    }
+    	return false;
+    }
     // ************************************************************************ 
     // PRIVILEGED METHODS 
     // MAY BE INVOKED PUBLICLY AND MAY ACCESS PRIVATE ITEMS 

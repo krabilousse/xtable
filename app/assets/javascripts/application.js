@@ -17,3 +17,4 @@
 //= require_tree .
 //= require fullcalendar
 //= require bootbox
+//= require jquery.ui.all

@@ -48,6 +48,9 @@ gem 'omniauth-google-oauth2'
 # Calendar
 gem 'fullcalendar-rails'
 
+# JQuery UI
+gem 'jquery-ui-rails'
+
 # Bootbox
 gem 'bootbox-rails', '~>0.3'
 
