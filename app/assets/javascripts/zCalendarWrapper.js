@@ -1,4 +1,5 @@
 /* ===================================================
+ * Basé sur
  * zCalendarWrapper.js v0.2.0
  * https://github.com/evolic/zf2-tutorial/blob/calendar/public/js/evl-calendar/zCalendarWrapper.js
  * ===================================================
@@ -124,7 +125,10 @@ function zCalendarWrapper(config) {
     function createEvent( startDate, endDate, allDay, jsEvent, view ) {
         var ts = new Date().getTime();
 
-        bootbox.prompt(translate('Event Title:'), function(title) {
+        bootbox.confirm("<form id='infos' action=''>\
+    First name:<input type='text' name='first_name'></input><br/>\
+    Last name:<input type='text' name='last_name'></input>\
+    </form>", function(title) {
             if (title) {
                 startDate = $.fullCalendar.formatDate(startDate, format);
                 endDate = $.fullCalendar.formatDate(endDate, format);
