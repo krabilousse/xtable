@@ -69,7 +69,8 @@ function zCalendarWrapper(config) {
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
-        editable: true,
+        defaultView: 'agendaWeek',
+        editable: false,
         selectable: true,
         selectHelper: true,
         firstDay: 1, // start week from Monday
@@ -80,7 +81,7 @@ function zCalendarWrapper(config) {
         axisFormat: 'H:mm',
         slotMinutes: 15,
         snapMinutes: 15,
-        defaultEventMinutes: 45,
+        defaultEventMinutes: 60,
         select: function( startDate, endDate, allDay, jsEvent, view ) {
             createEvent( startDate, endDate, allDay, jsEvent, view );
         },
@@ -159,7 +160,7 @@ function zCalendarWrapper(config) {
                             
                     },
                     error: function( jqXHR, textStatus, errorThrown ) {
-                        bootbox.alert('Error occured during saving event in the database', function() {});
+                        bootbox.alert('Error occured during saving event in the database\n'+errorThrown, function() {});
                     }
                 });
             }
@@ -277,23 +278,33 @@ function zCalendarWrapper(config) {
      * @private
      */
     function clickEvent ( event ) {
-        bootbox.dialog(translate('What do you want to do with event `%s`?').replace('%s', event.title), [{
-            "label" : translate('Delete'),
-            "class" : "btn-danger",
-            "callback": function() {
-                console.log("uh oh, look out!");
-                deleteEvent ( event );
-            }
-        }, {
-            "label" : translate('Edit'),
-            "class" : "btn-primary",
-            "callback": function() {
-                console.log("Primary button");
-                editEvent ( event );
-            }
-        }, {
-            "label" : translate('Cancel')
-        }]);
+        bootbox.dialog({
+		  message: "I am a custom dialog",
+		  title: "Custom title",
+		  buttons: {
+		    success: {
+		      label: "Success!",
+		      className: "btn-success",
+		      callback: function() {
+		        Example.show("great success");
+		      }
+		    },
+		    danger: {
+		      label: "Danger!",
+		      className: "btn-danger",
+		      callback: function() {
+		        Example.show("uh oh, look out!");
+		      }
+		    },
+		    main: {
+		      label: "Click ME!",
+		      className: "btn-primary",
+		      callback: function() {
+		        Example.show("Primary button");
+		      }
+		    }
+		  }
+		});
     }
 
     /**
