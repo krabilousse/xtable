@@ -52,6 +52,10 @@ class User < ActiveRecord::Base
     groups.include?(group)
   end
   
+  def private_group
+    groups.first
+  end
+  
   def create_user_bound_group
     g = Group.new
     ur = UserRole.new

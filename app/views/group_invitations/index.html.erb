@@ -1,21 +1,27 @@
 <h1>Pending group invitations</h1>
 
 <table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Group</th>      
-      <th></th>
-      <th></th>      
-    </tr>
-  </thead>
+	<thead>
+		<tr>
+			<th>Group</th>
+			<th>Visibility</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
 
-  <tbody>
-    <% @group_invitations.each do |group_invitation| %>
-      <tr>
-        <td><%= group_invitation.group.name.titleize %></td>                
-        <td><%= link_to 'Accept', group_invitation_accept_path(group_invitation), class: "btn btn-success" %></td>
-        <td><%= link_to 'Refuse', group_invitation_refuse_path(group_invitation), data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>        
-      </tr>
-    <% end %>
-  </tbody>
+	<tbody>
+		<% @group_invitations.each do |group_invitation| %>
+		<tr>
+			<td><%= group_invitation.group.name.titleize %></td>
+			<% if group_invitation.group.isPrivate %>
+			<td><span class="label label-default">private</span></td>
+			<% else %>
+			<td><span class="label label-primary">public</span></td>
+			<% end %>
+			<td><%= link_to 'Accept', group_invitation_accept_path(group_invitation), class: "btn btn-success" %></td>
+			<td><%= link_to 'Refuse', group_invitation_refuse_path(group_invitation), data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+		</tr>
+		<% end %>
+	</tbody>
 </table>
