@@ -132,15 +132,20 @@ function zCalendarWrapper(config) {
     <label for="eventName">Event Name</label>\
     <input type="text" class="form-control" id="eventName" placeholder="Enter event name">\
   </div>\
+  <div class="form-group" id="input">\
+    <label for="description">Description</label>\
+    <input type="text" class="form-control" id="description" placeholder="My event is about this">\
+  </div>\
   <div class="form-group">\
     <label for="eventLocation">Location</label>\
-    <input type="text" class="form-control" id="eventLocation" placeholder="Rue des pythons 9, Sion">\
+    <input type="text" class="form-control" id="eventLocation" placeholder="Rue des Pythons 9, Sion">\
   </div>\
 </form>', function(confirm) {
 	
 			title = $('input#eventName').val();
 			location_name = $('input#eventLocation').val();
-            if (confirm && title && location_name) {
+			description = $('input#description').val();
+            if (confirm && title && location_name && description) {
                 sd = new Date($.fullCalendar.formatDate(startDate, format2)).getTime()/1000;
                 ed = new Date($.fullCalendar.formatDate(endDate, format2)).getTime()/1000;
                 startDate = $.fullCalendar.formatDate(startDate, format);
@@ -174,7 +179,8 @@ function zCalendarWrapper(config) {
 	                        startDate: startDate,
 	                        endDate: endDate,
 	                        group_id: group_id,
-	                        location: location_name
+	                        location: location_name,
+	                        description:description
 	                       }
                     },
                     type: "POST",
@@ -211,7 +217,8 @@ function zCalendarWrapper(config) {
 	                        startDate: startDate,
 	                        endDate: endDate,
 	                        group_id: group_id,
-	                        location: location_name
+	                        location: location_name,
+	                        description:description
 	                       }
                     },
                     type: "POST",
@@ -249,7 +256,8 @@ function zCalendarWrapper(config) {
 	                        startDate: startDate,
 	                        endDate: endDate,
 	                        group_id: group_id,
-	                        location: location_name
+	                        location: location_name,
+	                        description:description
 	                       }
                     },
                     type: "POST",
