@@ -4,5 +4,10 @@ class Event < ActiveRecord::Base
   def as_json options={}
     {id:id, title: name, start:startDate, end:endDate, allDay:false}
   end
+  
+  def get_participants
+    self.users
+  end
+  
   self.per_page = 10
 end
