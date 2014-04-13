@@ -27,7 +27,13 @@
 		<% @events.each do |event| %>
 		<tr>
 			<td><%= link_to event.name, event %></td>
+			
+			<% if event.get_participants.include? current_user %>
+	        <td class="text-center"><%= link_to icon("minus-circle"), event_unparticipate_path(event.id) %></td>
+	        <% else %>
 	        <td class="text-center"><%= link_to icon("plus-circle"), event_participate_path(event.id) %></td>
+	        <% end %>
+	        
 		</tr>
 	<% end %>	
 	<% else %>
