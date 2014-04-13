@@ -91,13 +91,13 @@ class EventsController < ApplicationController
     
     begin
     @event.users << current_user
-    if @event.save and not @event.users.include? current_user
+    if @event.save
       redirect_to @event, notice: 'Participation ok !'
     else
       redirect_to @event, notice: 'Participation problem'
     end
     rescue
-      redirect_to @event, notice: 'Participation problem'
+      redirect_to @event, notice: 'Participation big problem'
     end
   end
   

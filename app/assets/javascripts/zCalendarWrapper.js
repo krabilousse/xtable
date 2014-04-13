@@ -86,12 +86,6 @@ function zCalendarWrapper(config) {
         select: function( startDate, endDate, allDay, jsEvent, view ) {
             createEvent( startDate, endDate, allDay, jsEvent, view );
         },
-        eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
-            updateEvent( event, revertFunc );
-        },
-        eventResize: function( event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ) {
-            updateEvent( event, revertFunc );
-        },
         eventClick: function( event, jsEvent, view ) {
             clickEvent( event );
         },
@@ -138,7 +132,7 @@ function zCalendarWrapper(config) {
 	
 			title = $('input#eventName').val();
 			location_name = $('input#eventLocation').val();
-            if (title && location_name) {
+            if (confirm && title && location_name) {
                 startDate = $.fullCalendar.formatDate(startDate, format);
                 endDate = $.fullCalendar.formatDate(endDate, format);
 
@@ -247,26 +241,17 @@ function zCalendarWrapper(config) {
         event.ts = ts;
 
         $.ajax({
-            url: api.erase,
+            url: api.erase + "/" + event.id + ".json",
             data: {
                 id: event.id,
                 ts: ts
             },
-            type: "POST",
+            type: "DELETE",
             success: function( response ) {
-                if (response.success) {
-                    bootbox.alert(response.message, function() {});
+                    bootbox.alert('Event '+ event.id+ ' deleted!', function() {});
                     var events = calendar.fullCalendar('clientEvents');
 
-                    for (var i in events) {
-                        if (typeof(events[i].ts) !== 'undefined' && events[i].ts == response.ts) {
-                            delete events[i].ts;
-                            calendar.fullCalendar("removeEvents", events[i]._id);
-                        }
-                    }
-                } else {
-                    bootbox.alert(response.message, function() {});
-                }
+                    calendar.fullCalendar("removeEvents", event.id);
             },
             error: function( jqXHR, textStatus, errorThrown ) {
                 bootbox.alert('Error occured during deleting event in the database', function() {});
@@ -274,51 +259,27 @@ function zCalendarWrapper(config) {
         });
     }
 
-    /**
-     * @param {Array} event
-     * @private
-     */
-    function editEvent ( event ) {
-        bootbox.prompt(translate('Event Title:'), translate('Cancel'), translate('OK'), function(title) {
-            if (title) {
-                event.title = title;
-                updateEvent( event, function () {}, true, true );
-            }
-        }, event.title);
-    }
 
     /**
      * @param {Array} event
      * @private
      */
     function clickEvent ( event ) {
-        bootbox.dialog({
-		  message: "I am a custom dialog",
-		  title: "Custom title",
+        if (isAdmin) {
+        	bootbox.dialog({
+		  message: "What do you want to do?",
+		  title: "Event",
 		  buttons: {
-		    success: {
-		      label: "Success!",
-		      className: "btn-success",
-		      callback: function() {
-		        Example.show("great success");
-		      }
-		    },
 		    danger: {
-		      label: "Danger!",
+		      label: "Delete this event",
 		      className: "btn-danger",
 		      callback: function() {
-		        Example.show("uh oh, look out!");
-		      }
-		    },
-		    main: {
-		      label: "Click ME!",
-		      className: "btn-primary",
-		      callback: function() {
-		        Example.show("Primary button");
+		        deleteEvent(event);
 		      }
 		    }
 		  }
 		});
+		}
     }
 
     /**

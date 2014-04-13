@@ -17,7 +17,8 @@
 			container: '#calendar',
 			api: {
 				get: "<%= events_path %>.json",
-				add: "<%= events_path %>.json"
+				add: "<%= events_path %>.json",
+				erase: "<%= events_path %>"
 			},
 			group_id: <%= current_user.groups.first.id %>
 		});
