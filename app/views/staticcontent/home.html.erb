@@ -46,7 +46,7 @@
        
 	<h1 class="bg-primary">My groups</h1>
 	
-<% groups = current_user.groups %>
+<% groups = current_user.groups - [current_user.private_group] %>
 
 <% if not groups.empty? %>
     
@@ -63,7 +63,6 @@
   
   <tbody>
 	<% groups.each do |group| %>
-	<% if group != groups.find(1) %>
       <tr>
         <td><%= link_to group.name, group %></td>
         <td><%= group.description %></td>
@@ -79,7 +78,6 @@
           <td class="text-center"><%= link_to icon("minus-circle"), group_unsubscribe_path(group.id) %></td>
         <% end %>
       </tr>
-    <% end %>
     <% end %>
     <% else %>
     	<div class="alert alert-info">There are no groups yet ! <%= link_to "Create one !", new_group_path %></div>
