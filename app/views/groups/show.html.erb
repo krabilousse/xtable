@@ -1,10 +1,7 @@
 <div class="col-md-6" id="calendar"></div>
 <div class="col-md-6" id="rightSide" padding-left:20px">
-<p id="notice">
-	<%= notice %>
-</p>
 
-<h1><%= @group.name %></h1>
+<h1 class="bg-primary"><%= @group.name %></h1>
 <% if current_user != @admin %>
   <%if @users.include? current_user %>
     <%= link_to 'Unsubscribe now !', group_unsubscribe_path(@group), class: "btn btn-primary"  %>
@@ -13,27 +10,31 @@
   <% end %>
 <% end %>
 
-<h2>What ?</h2>
+<h2>What is it about ?</h2>
 <p>
 	<%= @group.description %>
 </p>
-<table class="table table-hover">
-	<tr>
-		<th>Event</th>
-		<th class="text-center">Subscribe</th>
-	</tr>
-	<% @events.each do |event| %>
-	<tr>
-		<td><%= link_to event.name, event %></td>
-        <td class="text-center"><%= link_to icon("plus-circle"), group_subscribe_path(event.id) %></td>
-	</tr>
+	<% if not @events.empty? %>
+	<table class="table table-hover">
+		<tr>
+			<th>Event</th>
+			<th class="text-center">Participate</th>
+		</tr>
+		<% @events.each do |event| %>
+		<tr>
+			<td><%= link_to event.name, event %></td>
+	        <td class="text-center"><%= link_to icon("plus-circle"), event_participate_path(event.id) %></td>
+		</tr>
+	</table>
 	<% end %>
-</table>
+	<% else %>
+	<div class="alert alert-info">There are no events for this group! Create some by using the calendar.</div>
+	<% end %>
 
 <h2>Who's the boss ?</h2>
 <%= @admin.name %>
 
-<h2>Who like that ?</h2>
+<h2>Who likes that ?</h2>
 <table class="table table-hover">
 	<tr>
 		<th><span class="glyphicon glyphicon-user"></span> <%= pluralize(@followers.size, "follower") %> </th>
@@ -50,7 +51,7 @@
     <%= link_to icon('trash-o fa-lg', 'Delete'), @group, method: 'delete', class: "btn btn-danger" %>
 	<%= link_to icon('edit fa-lg', 'Edit'), edit_group_path(@group), class: "btn btn-warning" %>
 <% end %>
-<h2>Invite somenone !</h2>
+<h2>Invite someone !</h2>
 <%= render 'invite' %>
 </div>
 
@@ -63,7 +64,8 @@
 				get: "<%= group_path %>.json",
 				add: "<%= events_path %>.json"
 			},
-			group_id:<%= @group.id %>
+			group_id:<%= @group.id %>,
+			isAdmin: <%= @group.is_admin? current_user %>
 		});
 	}) ;
 </script>

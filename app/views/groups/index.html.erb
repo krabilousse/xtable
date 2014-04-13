@@ -1,33 +1,39 @@
 <h1>Visible Groups</h1>
 
+    <% if not @groups.empty? %>
 <%= render 'search' %>
-<br/>
-
 <table class="table table-hover">
   <thead>
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Visibility</th>
       <th class="text-center">Subscribe/Unsubscribe</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @groups.each do |group| %>
-      <%
-      admin = group.get_admin
-      %>
+		<% @groups.each do |group| %>
       <tr>
         <td><%= link_to group.name, group %></td>
         <td><%= group.description %></td>
-        <% if current_user == admin %>
-          <td class="text-center"> Admin </td>
+        <% if group.isPrivate %>
+        <td><span class="label label-default">private</span></td>
+        <% else %>
+        <td><span class="label label-primary">public</span></td>
+        <% end %>
+        
+        <% if group.is_admin?(current_user) %>
+          <td class="text-center"><%= icon("wrench") %></td>
         <% elsif group.users.include? current_user %>
           <td class="text-center"><%= link_to icon("minus-circle"), group_unsubscribe_path(group.id) %></td>
         <% else %>
           <td class="text-center"><%= link_to icon("plus-circle"), group_subscribe_path(group.id) %></td>
         <% end %>
       </tr>
+    <% end %>
+    <% else %>
+    	<div class="alert alert-info">There are no groups yet ! <%= link_to "Create one !", new_group_path %></div>
     <% end %>
   </tbody>
 </table>

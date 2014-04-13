@@ -12,6 +12,7 @@ Xtable::Application.routes.draw do
       get 'search'
     end
     get 'participate'
+    get 'unparticipate'
   end
   
   resources :group_invitations do    

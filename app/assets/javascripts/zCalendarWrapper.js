@@ -86,12 +86,6 @@ function zCalendarWrapper(config) {
         select: function( startDate, endDate, allDay, jsEvent, view ) {
             createEvent( startDate, endDate, allDay, jsEvent, view );
         },
-        eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
-            updateEvent( event, revertFunc );
-        },
-        eventResize: function( event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ) {
-            updateEvent( event, revertFunc );
-        },
         eventClick: function( event, jsEvent, view ) {
             clickEvent( event );
         },
@@ -107,7 +101,13 @@ function zCalendarWrapper(config) {
     var cfg = defaults;
     $.extend(true, cfg, config);
 
+
+	/**
+	 * xTable specific variables
+	 * @private
+	 */
 	var group_id = config.group_id;
+	var isAdmin = config.isAdmin;
 
     /**
      * @private
@@ -125,11 +125,20 @@ function zCalendarWrapper(config) {
     function createEvent( startDate, endDate, allDay, jsEvent, view ) {
         var ts = new Date().getTime();
 
-        bootbox.confirm("<form id='infos' action=''>\
-    First name:<input type='text' name='first_name'></input><br/>\
-    Last name:<input type='text' name='last_name'></input>\
-    </form>", function(title) {
-            if (title) {
+        bootbox.confirm('<form role="form">\
+  <div class="form-group" id="input">\
+    <label for="eventName">Event Name</label>\
+    <input type="text" class="form-control" id="eventName" placeholder="Enter event name">\
+  </div>\
+  <div class="form-group">\
+    <label for="eventLocation">Location</label>\
+    <input type="text" class="form-control" id="eventLocation" placeholder="Rue des pythons 9, Sion">\
+  </div>\
+</form>', function(confirm) {
+	
+			title = $('input#eventName').val();
+			location_name = $('input#eventLocation').val();
+            if (confirm && title && location_name) {
                 startDate = $.fullCalendar.formatDate(startDate, format);
                 endDate = $.fullCalendar.formatDate(endDate, format);
 
@@ -140,7 +149,8 @@ function zCalendarWrapper(config) {
 	                        name: title,
 	                        startDate: startDate,
 	                        endDate: endDate,
-	                        group_id: group_id
+	                        group_id: group_id,
+	                        location: location_name
 	                       }
                     },
                     type: "POST",
@@ -167,6 +177,13 @@ function zCalendarWrapper(config) {
                         bootbox.alert('Error occured during saving event in the database\n'+errorThrown, function() {});
                     }
                 });
+            }
+            else if (confirm && (!title || !location_name))
+            {
+            	bootbox.alert('You must enter a <strong>name</strong> and a <strong>location</strong> !',function(){
+            		createEvent( startDate, endDate, allDay, jsEvent, view );
+            	});
+            	
             }
         });
         calendar.fullCalendar('unselect');
@@ -237,26 +254,17 @@ function zCalendarWrapper(config) {
         event.ts = ts;
 
         $.ajax({
-            url: api.erase,
+            url: api.erase + "/" + event.id + ".json",
             data: {
                 id: event.id,
                 ts: ts
             },
-            type: "POST",
+            type: "DELETE",
             success: function( response ) {
-                if (response.success) {
-                    bootbox.alert(response.message, function() {});
+                    bootbox.alert('Event '+ event.id+ ' deleted!', function() {});
                     var events = calendar.fullCalendar('clientEvents');
 
-                    for (var i in events) {
-                        if (typeof(events[i].ts) !== 'undefined' && events[i].ts == response.ts) {
-                            delete events[i].ts;
-                            calendar.fullCalendar("removeEvents", events[i]._id);
-                        }
-                    }
-                } else {
-                    bootbox.alert(response.message, function() {});
-                }
+                    calendar.fullCalendar("removeEvents", event.id);
             },
             error: function( jqXHR, textStatus, errorThrown ) {
                 bootbox.alert('Error occured during deleting event in the database', function() {});
@@ -264,56 +272,50 @@ function zCalendarWrapper(config) {
         });
     }
 
-    /**
-     * @param {Array} event
-     * @private
-     */
-    function editEvent ( event ) {
-        bootbox.prompt(translate('Event Title:'), translate('Cancel'), translate('OK'), function(title) {
-            if (title) {
-                event.title = title;
-                updateEvent( event, function () {}, true, true );
-            }
-        }, event.title);
-    }
 
     /**
      * @param {Array} event
      * @private
      */
     function clickEvent ( event ) {
-        bootbox.dialog({
-		  message: "I am a custom dialog",
-		  title: "Custom title",
+        if (isAdmin) {
+        	bootbox.dialog({
+		  message: "What do you want to do?",
+		  title: "Event",
 		  buttons: {
-		    success: {
-		      label: "Success!",
-		      className: "btn-success",
-		      callback: function() {
-		        Example.show("great success");
-		      }
-		    },
 		    danger: {
-		      label: "Danger!",
+		      label: "Delete this event",
 		      className: "btn-danger",
 		      callback: function() {
-		        Example.show("uh oh, look out!");
+		        deleteEvent(event);
 		      }
 		    },
-		    main: {
-		      label: "Click ME!",
-		      className: "btn-primary",
+		    info: {
+		      label: "Show this event",
+		      className: "btn-info",
 		      callback: function() {
-		        Example.show("Primary button");
+				redirectToEvent(event);
 		      }
 		    }
 		  }
 		});
+		}
+		else {
+			redirectToEvent(event);
+		}
     }
 
     /**
      * @private
      */
+    
+    function redirectToEvent(event)
+    {
+		var eventUrlRadical = api.add.replace(/\..+$/, '');
+		var url= eventUrlRadical + "/" + event.id;
+		$(location).attr('href',url);
+    }
+    
     function translate(text) {
             return text;
         

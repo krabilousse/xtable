@@ -1,8 +1,8 @@
-<h1>Listing events</h1>
+<h1>Events</h1>
 
+<% if not @events.empty? %>
 <%= render 'search' %>
 <br/>
-
 <table class="table table-hover">
   <thead>
     <tr>
@@ -19,7 +19,13 @@
     <% @paginated_events.each do |event| %>
       <tr>
         <td><%= event.name %></td>
-        <td><%= link_to event.group.name, group_path(event.group) %></td>
+        <td>
+        	<% if event.group == current_user.private_group %>
+        	Your own events
+	        <% else %>
+	        <%= link_to event.group.name, group_path(event.group) %>
+	        <% end %>
+        </td>
         <td><%= event.startDate %></td>
         <td><%= event.endDate %></td>
         <td><%= event.location %></td>
@@ -27,12 +33,18 @@
         	<span class="glyphicon glyphicon-user"></span> <%= pluralize(event.users.size,"participant") %>
         
     	</td>
+    	<% if not event.group == current_user.private_group %>
+    	<% if event.users.include? current_user %>
+        <td><%= link_to icon('minus-circle'), event_unparticipate_path(event.id) %></td>
+        <% else %>
         <td><%= link_to icon('plus-circle'), event_participate_path(event.id) %></td>
+        <% end %>
+        <% end %>
       </tr>
+    <% end %>
+    <% else%>
+    <div class="alert alert-info">There are no events yet ! <%= link_to "Create a group", new_group_path %> then add some !</div>
     <% end %>
   </tbody>
 </table>
 <%= will_paginate @paginated_events, renderer: BootstrapPagination::Rails %>
-<br>
-
-<%= link_to 'New Event', new_event_path %>

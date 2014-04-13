@@ -1,5 +1,6 @@
 <%= bootstrap_form_for(@group_invitation, layout: :inline) do |f| %>
-	<%= f.collection_select(:user_id, @users_to_invite, :id, :name, hide_label: :true) %>
+	<%= f.collection_select(:user_id, @users_to_invite, :id, :name, {hide_label: :true}, {class: 'chosen-select'}) %>	
 	<%= f.hidden_field :group_id, value: @group.id %>
 	<%= f.submit "Invite", class: "btn btn-primary" %>
 <% end %>
+<%= javascript_include_tag "groups", "data-turbolinks-track" => false %>

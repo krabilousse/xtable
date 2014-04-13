@@ -30,7 +30,6 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
   end
 
   # GET /events/1/edit
@@ -91,13 +90,23 @@ class EventsController < ApplicationController
     
     begin
     @event.users << current_user
-    if @event.save and not @event.users.include? current_user
+    if @event.save
       redirect_to @event, notice: 'Participation ok !'
     else
       redirect_to @event, notice: 'Participation problem'
     end
     rescue
-      redirect_to @event, notice: 'Participation problem'
+      redirect_to @event, notice: 'Participation big problem'
+    end
+  end
+  
+  def unparticipate
+    @event = Event.find(params[:event_id])
+    begin
+      @event.users.delete(current_user)
+      redirect_to @event, notice: 'Not participating anymore!'
+    rescue
+      redirect_to @event, notice: 'Problem while unparticipating!'
     end
   end
 

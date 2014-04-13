@@ -52,9 +52,6 @@
 								<li class="<%= 'active' if params[:controller] == 'events' && params[:action] == 'index' %>">
 									<%= link_to "Show all", events_path %>
 								</li>
-								<li class="<%= 'active' if params[:controller] == 'events' && params[:action] == 'new' %>">
-									<%= link_to "New event", new_event_path %>
-								</li>
 							</ul>
 						</li>
 						<li class="<%= 'active' if params[:controller] == 'group_invitations' %>">							
@@ -118,7 +115,7 @@
 			<% end %>
 
 			<%= yield %>
-		</div><!-- /.container -->
-	</body>
+		</div><!-- /.container -->		
+	</body>	
 </html>
 

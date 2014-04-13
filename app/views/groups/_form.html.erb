@@ -2,6 +2,6 @@
 <%= f.alert_message "Error" %>
     <%= f.text_field :name %>
     <%= f.text_field :description %>
-    <%= f.check_box :isPrivate %>
+    <%= f.check_box :isPrivate, label:'Private group' %>
     <%= f.submit "Apply", class: "btn btn-primary" %>
 <% end %>
