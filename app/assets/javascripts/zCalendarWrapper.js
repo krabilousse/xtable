@@ -289,15 +289,33 @@ function zCalendarWrapper(config) {
 		      callback: function() {
 		        deleteEvent(event);
 		      }
+		    },
+		    info: {
+		      label: "Show this event",
+		      className: "btn-info",
+		      callback: function() {
+				redirectToEvent(event);
+		      }
 		    }
 		  }
 		});
+		}
+		else {
+			redirectToEvent(event);
 		}
     }
 
     /**
      * @private
      */
+    
+    function redirectToEvent(event)
+    {
+		var eventUrlRadical = api.add.replace(/\..+$/, '');
+		var url= eventUrlRadical + "/" + event.id;
+		$(location).attr('href',url);
+    }
+    
     function translate(text) {
             return text;
         

@@ -19,7 +19,13 @@
     <% @paginated_events.each do |event| %>
       <tr>
         <td><%= event.name %></td>
-        <td><%= link_to event.group.name, group_path(event.group) %></td>
+        <td>
+        	<% if event.group == current_user.private_group %>
+        	Your own events
+	        <% else %>
+	        <%= link_to event.group.name, group_path(event.group) %>
+	        <% end %>
+        </td>
         <td><%= event.startDate %></td>
         <td><%= event.endDate %></td>
         <td><%= event.location %></td>
@@ -27,10 +33,12 @@
         	<span class="glyphicon glyphicon-user"></span> <%= pluralize(event.users.size,"participant") %>
         
     	</td>
+    	<% if not event.group == current_user.private_group %>
     	<% if event.users.include? current_user %>
         <td><%= link_to icon('minus-circle'), event_unparticipate_path(event.id) %></td>
         <% else %>
         <td><%= link_to icon('plus-circle'), event_participate_path(event.id) %></td>
+        <% end %>
         <% end %>
       </tr>
     <% end %>
