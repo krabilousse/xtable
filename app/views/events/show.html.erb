@@ -25,14 +25,18 @@
 
 <h2>Whom with ?</h2>
 <table class="table table-hover header-fixed">
+	<thead>
 	<tr>
 		<th><span class="glyphicon glyphicon-user"></span> <%= pluralize(@participants.size, "participants") %> </th>
 	</tr>
+	</thead>
+	<tbody>
 	<% @participants.each do |participant| %>
 	<tr>
 		<td><%= participant.name %></td>
 	</tr>
 	<% end %>
+	</tbody>
 	
 </table>
 

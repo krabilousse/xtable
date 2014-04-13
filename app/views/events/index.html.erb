@@ -12,6 +12,7 @@
       <th>Ends</th>
       <th>Location</th>
       <th>Participants</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -30,8 +31,7 @@
         <td><%= event.endDate %></td>
         <td><%= event.location %></td>
         <td>
-        	<span class="glyphicon glyphicon-user"></span> <%= pluralize(event.users.size,"participant") %>
-        
+        	<span class="glyphicon glyphicon-user"></span> <%= pluralize(event.users.size,"participant") %>        
     	</td>
     	<% if not event.group == current_user.private_group %>
     	<% if event.users.include? current_user %>

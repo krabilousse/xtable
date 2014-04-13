@@ -1,5 +1,5 @@
 <div class="col-md-6" id="calendar"></div>
-<div class="col-md-6" id="rightSide" padding-left:20px">
+<div class="col-md-6" id="rightSide" padding-left="20px">
 
 <h1 class="bg-primary"><%= @group.name %></h1>
 <% if current_user != @admin %>
@@ -15,7 +15,7 @@
 	<%= @group.description %>
 </p>
 	<% if not @events.empty? %>
-	<table class="table table-hover header-fixed">
+	<table class="table table-hover">
 	  <thead>
 		<tr>
 			<th>Event</th>
@@ -29,8 +29,7 @@
 			<td><%= link_to event.name, event %></td>
 	        <td class="text-center"><%= link_to icon("plus-circle"), event_participate_path(event.id) %></td>
 		</tr>
-	<% end %>
-	</table>
+	<% end %>	
 	<% else %>
 	<div class="alert alert-info">There are no events for this group! Create some by using the calendar.</div>
 	<% end %>
@@ -41,15 +40,19 @@
 <%= @admin.name %>
 
 <h2>Who likes that ?</h2>
-<table class="table table-hover header-fixed">
+<table class="table table-hover">
+	<thead>
 	<tr>
 		<th><span class="glyphicon glyphicon-user"></span> <%= pluralize(@followers.size, "follower") %> </th>
 	</tr>
+	</thead>
+	<tbody>
 	<% @followers.each do |follower| %>
 	<tr>
 		<td><%= follower.name %></td>
 	</tr>
 	<% end %>
+	</tbody>
 	
 </table>
 

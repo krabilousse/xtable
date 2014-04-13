@@ -3,24 +3,28 @@
 <%= render 'search' %>
 <br/>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Participate</th>
-    </tr>
-  </thead>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Participate</th>
+		</tr>
+	</thead>
 
-  <tbody>
-    <% @search.each do |event| %>
-      <tr>
-        <td><%= link_to event.name, event %></td>
-        <td><%= event.description %></td>
-        <td>+</td>
-      </tr>
-    <% end %>
-  </tbody>
+	<tbody>
+		<% @search.each do |event| %>
+		<tr>
+			<td><%= link_to event.name, event %></td>
+			<td><%= event.description %></td>
+			<% if event.users.include? current_user %>
+			<td><%= link_to icon('minus-circle'), event_unparticipate_path(event.id) %></td>
+			<% else %>
+			<td><%= link_to icon('plus-circle'), event_participate_path(event.id) %></td>
+			<% end %>
+		</tr>
+		<% end %>
+	</tbody>
 </table>
 
 <%= will_paginate @search, renderer: BootstrapPagination::Rails %>
