@@ -16,7 +16,7 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody>  	
     <% @paginated_events.each do |event| %>
       <tr>
         <td><%= link_to event.name, event_path(event) %></td>

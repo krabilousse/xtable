@@ -5,8 +5,16 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @emptySearch=Event.new
-    @events = Event.all
-    @paginated_events = Event.all.paginate(page: params[:page])
+            
+    ids = []
+    Event.find_each() do |event|
+      if !event.group.is_personal || event.group.users.include?(current_user)
+        ids << event.id
+      end
+    end
+    
+    @events = Event.where("id IN(?)", ids)
+    @paginated_events = Event.where("id IN(?)", ids).paginate(page: params[:page])        
     
     startD = Time.at(params[:start].to_f).to_datetime
     endD = Time.at(params[:end].to_f).to_datetime
