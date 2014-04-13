@@ -18,7 +18,7 @@
   <tbody>
     <% @paginated_events.each do |event| %>
       <tr>
-        <td><%= event.name %></td>
+        <td><%= link_to event.name, event_path(event) %></td>
         <td>
         	<% if event.group == current_user.private_group %>
         	Your own events

@@ -24,12 +24,16 @@
 <p>Group : <%= @group.name %></p>
 
 <h2>Whom with ?</h2>
-	<p>
-		Participants (<%= @participants.count %>) :
-		<ul>
-			<% @participants.each do |p| %>
-			<li><%= p.name %></li>
-			<% end %>
-		</ul>
-	</p>
+<table class="table table-hover header-fixed">
+	<tr>
+		<th><span class="glyphicon glyphicon-user"></span> <%= pluralize(@participants.size, "participants") %> </th>
+	</tr>
+	<% @participants.each do |participant| %>
+	<tr>
+		<td><%= participant.name %></td>
+	</tr>
+	<% end %>
+	
+</table>
+
 

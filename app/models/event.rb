@@ -4,5 +4,5 @@ class Event < ActiveRecord::Base
   def as_json options={}
     {id:id, title: name, start:startDate, end:endDate, allDay:false}
   end
-  self.per_page = 2
+  self.per_page = 10
 end
