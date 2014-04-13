@@ -3,25 +3,28 @@
 <%= render 'search' %>
 <br/>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>Subscribe</th>
+      <th>Visibility</th>
+      <th class="text-center">Subscribe/Unsubscribe</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @search.each do |group| %>
-      <%
-      admin = group.get_admin
-      %>
+    <% @search.each do |group| %>      
       <tr>
         <td><%= link_to group.name, group %></td>
         <td><%= group.description %></td>
-        <% if current_user == admin %>
-          <td class="text-center"> Admin </td>
+        <% if group.isPrivate %>
+        <td><span class="label label-default">private</span></td>
+        <% else %>
+        <td><span class="label label-primary">public</span></td>
+        <% end %>
+        <% if group.is_admin?(current_user) %>
+          <td class="text-center"><%= icon("wrench") %></td>
         <% elsif group.users.include? current_user %>
           <td class="text-center"><%= link_to icon("minus-circle"), group_unsubscribe_path(group.id) %></td>
         <% else %>

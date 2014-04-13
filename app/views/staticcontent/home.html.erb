@@ -2,7 +2,7 @@
 <div class="jumbotron">
 	<h1>Welcome to xTable</h1>
 	<p>
-		This app aims to make your life easier! It's a smart calendar that helps you to manage and optimize your time. You can publish and subscribe to group events. xTable handles conflicts in your calendar, meaning that it warns you if you planned to go to many events at the same time!
+		This app aims at making your life easier! It's a smart calendar that helps you to manage and optimize your time. You can publish and subscribe to group events. xTable handles conflicts in your calendar, meaning that it warns you if you planned to go to many events at the same time!
 	</p>
 	<p>
 		<%= link_to  "It's time to get in!", new_user_session_path(), class: "btn btn-primary btn-lg"%>
@@ -20,7 +20,7 @@
 				add: "<%= events_path %>.json",
 				erase: "<%= events_path %>"
 			},
-			group_id: <%= current_user.groups.first.id %>
+			group_id: <%= current_user.private_group.id %>
 		});
 	}) ;
 </script>

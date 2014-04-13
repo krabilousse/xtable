@@ -4,6 +4,8 @@ class Group < ActiveRecord::Base
   has_many :user_roles
   has_many :users, :through => :user_roles
   
+  validates :name, presence: true
+  
   self.per_page=2
   
   def is_admin?(user)

@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
-//= require_tree .
 //= require fullcalendar
 //= require bootbox
 //= require jquery.ui.all
+//= require chosen-jquery
+//= require_tree .
