@@ -16,7 +16,11 @@ class Group < ActiveRecord::Base
   end
   
   def users_not_following(user)
-    User.all - self.users - [user]
+    already_invited = []    
+    GroupInvitation.find_each(conditions: {group: self, group_invitation_status: GroupInvitationStatus.pending}) do |gi|
+      already_invited << gi.user
+    end    
+    User.all - self.users - [user] - already_invited
   end
   
   def add_follower(user)    
