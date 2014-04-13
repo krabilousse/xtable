@@ -19,7 +19,7 @@
 				get: "<%= events_path %>.json",
 				add: "<%= events_path %>.json"
 			},
-			group_id: <%= current_user.groups.first.id %>
+			group_id: <%= current_user.private_group.id %>
 		});
 	}) ;
 </script>

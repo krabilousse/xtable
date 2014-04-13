@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   
   def create_user_bound_group
     g = Group.new
+    g.name = self.name + " _private"
     ur = UserRole.new
     ur.user = self
     ur.group = g
