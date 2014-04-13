@@ -25,8 +25,8 @@
 			<td><%= link_to event.name, event %></td>
 	        <td class="text-center"><%= link_to icon("plus-circle"), event_participate_path(event.id) %></td>
 		</tr>
-	</table>
 	<% end %>
+	</table>
 	<% else %>
 	<div class="alert alert-info">There are no events for this group! Create some by using the calendar.</div>
 	<% end %>
@@ -65,7 +65,8 @@
 				add: "<%= events_path %>.json"
 			},
 			group_id:<%= @group.id %>,
-			isAdmin: <%= @group.is_admin? current_user %>
+			isAdmin: <%= @group.is_admin? current_user %>,
+			conflicts_path: "<%= conflicts_path %>"
 		});
 	}) ;
 </script>

@@ -19,6 +19,8 @@ Xtable::Application.routes.draw do
     get 'accept'
     get 'refuse'
   end
+  
+  get 'conflicts' => 'events#conflictingusers'
 
   root to: "staticcontent#home"
   

@@ -9,8 +9,40 @@
 	</p>
 </div>
 <% else %>
+<% if @conflictingEvents.empty? %>
 <div id="calendar"></div>
-
+<% else %>
+<div id="calendar" class="col-md-7"></div>
+<div id="conflicts" class="col-md-5">
+	<h2 class="bg-warning">You have conflicts!</h2>
+     <% @conflictingEvents.each do |e| %>
+	<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th style="text-align: right">Group</th>
+    </tr>
+  </thead>
+  <tbody>
+       <% e.each do |o| %>
+       <tr>
+       	<td>
+         <%= link_to o.name, event_path(o) %>
+         </td>
+         <td style="text-align:right">
+         	<% if current_user.private_group != o.group %>
+         	<%= o.group.name %>
+         	<% else %>
+         	Your own event
+         	<% end %>
+         </td>
+        </tr>
+         <% end %>
+       </tbody>
+       </table>
+       <% end %>
+       <% end %>
+</div>
 <script>
 	$(document).ready(function() { 
 		var calendarWrapper = new zCalendarWrapper({

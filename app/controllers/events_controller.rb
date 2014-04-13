@@ -7,6 +7,7 @@ class EventsController < ApplicationController
     @emptySearch=Event.new
     @events = Event.all
     @paginated_events = Event.all.paginate(page: params[:page])
+    
     startD = Time.at(params[:start].to_f).to_datetime
     endD = Time.at(params[:end].to_f).to_datetime
   
@@ -107,6 +108,25 @@ class EventsController < ApplicationController
       redirect_to @event, notice: 'Not participating anymore!'
     rescue
       redirect_to @event, notice: 'Problem while unparticipating!'
+    end
+  end
+  
+  def conflictingusers
+    users = User.all
+    
+    conflictingUsers = 0
+    
+    startD = Time.at(params[:start].to_f).to_datetime
+    endD = Time.at(params[:end].to_f).to_datetime
+    
+    users.each do |u|
+      if not u.events.select{|e2| e2.startDate<=endD and startD<=e2.endDate}.empty?
+        conflictingUsers+=1
+      end
+    end
+    
+    respond_to do |format|
+      format.json { render json: conflictingUsers}
     end
   end
 
