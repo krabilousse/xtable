@@ -2,14 +2,14 @@ class GroupInvitationStatus < ActiveRecord::Base
   has_many :group_invitations
   
   def self.pending
-    self.where(name: "pending").first     
+    self.where(name: "Pending").first     
   end
   
   def self.accepted
-    self.where(name: "accepted").first    
+    self.where(name: "Accepted").first    
   end
   
   def self.refused
-    self.where(name: "refused").first    
+    self.where(name: "Refused").first    
   end
 end
