@@ -101,7 +101,13 @@ function zCalendarWrapper(config) {
     var cfg = defaults;
     $.extend(true, cfg, config);
 
+
+	/**
+	 * xTable specific variables
+	 * @private
+	 */
 	var group_id = config.group_id;
+	var isAdmin = config.isAdmin;
 
     /**
      * @private
@@ -171,6 +177,13 @@ function zCalendarWrapper(config) {
                         bootbox.alert('Error occured during saving event in the database\n'+errorThrown, function() {});
                     }
                 });
+            }
+            else if (confirm && (!title || !location_name))
+            {
+            	bootbox.alert('You must enter a <strong>name</strong> and a <strong>location</strong> !',function(){
+            		createEvent( startDate, endDate, allDay, jsEvent, view );
+            	});
+            	
             }
         });
         calendar.fullCalendar('unselect');

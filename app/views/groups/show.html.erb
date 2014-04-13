@@ -17,12 +17,12 @@
 <table class="table table-hover">
 	<tr>
 		<th>Event</th>
-		<th class="text-center">Subscribe</th>
+		<th class="text-center">Participate</th>
 	</tr>
 	<% @events.each do |event| %>
 	<tr>
 		<td><%= link_to event.name, event %></td>
-        <td class="text-center"><%= link_to icon("plus-circle"), group_subscribe_path(event.id) %></td>
+        <td class="text-center"><%= link_to icon("plus-circle"), event_participate_path(event.id) %></td>
 	</tr>
 	<% end %>
 </table>
@@ -60,7 +60,8 @@
 				get: "<%= group_path %>.json",
 				add: "<%= events_path %>.json"
 			},
-			group_id:<%= @group.id %>
+			group_id:<%= @group.id %>,
+			isAdmin: <%= @group.is_admin? current_user %>
 		});
 	}) ;
 </script>

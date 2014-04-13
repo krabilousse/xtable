@@ -16,6 +16,5 @@
 //= require bootstrap
 //= require fullcalendar
 //= require bootbox
-//= require jquery.ui.all
 //= require chosen-jquery
 //= require_tree .
