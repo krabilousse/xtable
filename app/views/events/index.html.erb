@@ -1,8 +1,8 @@
-<h1>Listing events</h1>
+<h1>Events</h1>
 
+<% if not @events.empty? %>
 <%= render 'search' %>
 <br/>
-
 <table class="table table-hover">
   <thead>
     <tr>
@@ -33,6 +33,9 @@
         <td><%= link_to icon('plus-circle'), event_participate_path(event.id) %></td>
         <% end %>
       </tr>
+    <% end %>
+    <% else%>
+    <div class="alert alert-info">There are no events yet ! <%= link_to "Create a group", new_group_path %> then add some !</div>
     <% end %>
   </tbody>
 </table>

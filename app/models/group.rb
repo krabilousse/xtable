@@ -12,7 +12,7 @@ class Group < ActiveRecord::Base
     admin_role = Role.where(name: "Admin").first
     ur = user_roles.where(user: user, role: admin_role)
     
-    ur.size > 0    
+    ur.size > 0
   end
   
   def users_not_following(user)
