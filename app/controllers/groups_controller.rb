@@ -2,12 +2,17 @@ class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   before_action :checkIsAdmin, except: [:show, :index, :create, :new, :search, :subscribe, :unsubscribe]
+  before_action :check_read_access_right, only: [:show]
+  before_action :check_write_access_right, only: [:edit, :update, :destroy]
+  
   # before_filter :authenticate_user!
   # GET /groups
   # GET /groups.json
   def index
     @emptySearch=Group.new
-    @groups = Group.where(isPrivate: false).paginate(page: params[:page])
+    #to array conversion
+    ids = current_user.groups - [current_user.private_group]
+    @groups = Group.where("isPrivate=false OR id IN(?)", ids).paginate(page: params[:page])
   end
 
   # GET /groups/1
@@ -27,7 +32,7 @@ class GroupsController < ApplicationController
     startD = Time.at(params[:start].to_f).to_datetime
     endD = Time.at(params[:end].to_f).to_datetime
   
-    respond_to do |format|
+    respond_to do |format|      
       format.json {
         render json: @events
         .where(:startDate => startD.to_time..endD.to_time)
@@ -113,6 +118,18 @@ class GroupsController < ApplicationController
   
   def checkIsAdmin
     @group.is_admin?(current_user)
+  end
+  
+  def check_read_access_right
+    if @group == current_user.private_group || !current_user.is_in_group?(@group) && @group.isPrivate
+      redirect_to groups_path, notice: 'You can\'t access this group'
+    end 
+  end
+  
+  def check_write_access_right
+    if @group == current_user.private_group || !@group.is_admin?(current_user)
+      redirect_to groups_path, notice: 'You can\'t access this group'
+    end 
   end
   
   private
