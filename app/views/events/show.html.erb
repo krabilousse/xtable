@@ -1,11 +1,12 @@
 <p id="notice"><%= notice %></p>
-
-
 <h1><%= @event.name %></h1>
-
-<p></p>
-<a class="btn btn-primary">Subscribe now !</a>
-
+<button class="btn btn-info">
+<% if @event.users.include? current_user %>
+<%= link_to "Stop participating", event_unparticipate_path(@event) %>
+<% else %>
+<%= link_to "Participate", event_participate_path(@event) %>
+<% end %>
+</button>
 <h2>Where ?</h2>
 <p><%= @event.location %></p>
 
