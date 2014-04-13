@@ -108,11 +108,13 @@ function zCalendarWrapper(config) {
 	 */
 	var group_id = config.group_id;
 	var isAdmin = config.isAdmin;
+	var conflicts_path = config.conflicts_path;
 
     /**
      * @private
      */
     var format = "dd-MM-yyyy HH:mm:ss";
+    var format2 = "u";
     /**
      * jQuery FullCalendar instance
      * @private
@@ -139,10 +141,32 @@ function zCalendarWrapper(config) {
 			title = $('input#eventName').val();
 			location_name = $('input#eventLocation').val();
             if (confirm && title && location_name) {
+                sd = new Date($.fullCalendar.formatDate(startDate, format2)).getTime()/1000;
+                ed = new Date($.fullCalendar.formatDate(endDate, format2)).getTime()/1000;
                 startDate = $.fullCalendar.formatDate(startDate, format);
                 endDate = $.fullCalendar.formatDate(endDate, format);
-
-                $.ajax({
+				var conflicts = 0;
+				breakout = false;
+				continueAlong = false;
+				if (conflicts_path) {
+					$.ajax({
+						url: conflicts_path,
+						data : {
+							start:sd,
+							end:ed
+						},
+						async:false,
+						type:"GET",
+						success: function(response) {
+							conflicts = response;
+									continueAlong = true;
+							if (conflicts > 0)
+							{
+								bootbox.confirm("<div class='alert alert-danger'>There are " + conflicts + " users in conflict with your event! Keep on creating the event?", function(confirm)
+								{
+									if (confirm)
+									{
+										$.ajax({
                     url: api.add,
                     data: {
                     	event: {
@@ -170,13 +194,89 @@ function zCalendarWrapper(config) {
 		                    ts:ts,
 		                    id:response.id
 		                }, true); // make the event "stick"
-		                console.log(startDate,endDate);
-                            
                     },
                     error: function( jqXHR, textStatus, errorThrown ) {
                         bootbox.alert('Error occured during saving event in the database\n'+errorThrown, function() {});
                     }
                 });
+									}
+								});
+							}
+							else {
+								$.ajax({
+                    url: api.add,
+                    data: {
+                    	event: {
+	                        name: title,
+	                        startDate: startDate,
+	                        endDate: endDate,
+	                        group_id: group_id,
+	                        location: location_name
+	                       }
+                    },
+                    type: "POST",
+                    success: function( response ) {
+                            var events = calendar.fullCalendar('clientEvents');
+                            for (var i in events) {
+                                if (typeof(events[i].ts) !== 'undefined' && events[i].ts == response.ts) {
+                                    events[i].id = parseInt(response.id);
+                                    delete events[i].ts;
+                                }
+                            }
+		                calendar.fullCalendar('renderEvent', {
+		                    title: title,
+		                    start: response.startDate,
+		                    end: response.endDate,
+		                    allDay: false,
+		                    ts:ts,
+		                    id:response.id
+		                }, true); // make the event "stick"
+                    },
+                    error: function( jqXHR, textStatus, errorThrown ) {
+                        bootbox.alert('Error occured during saving event in the database\n'+errorThrown, function() {});
+                    }
+                });
+							}
+						}
+					});
+				}
+				else {
+					$.ajax({
+                    url: api.add,
+                    data: {
+                    	event: {
+	                        name: title,
+	                        startDate: startDate,
+	                        endDate: endDate,
+	                        group_id: group_id,
+	                        location: location_name
+	                       }
+                    },
+                    type: "POST",
+                    success: function( response ) {
+                            var events = calendar.fullCalendar('clientEvents');
+                            for (var i in events) {
+                                if (typeof(events[i].ts) !== 'undefined' && events[i].ts == response.ts) {
+                                    events[i].id = parseInt(response.id);
+                                    delete events[i].ts;
+                                }
+                            }
+		                calendar.fullCalendar('renderEvent', {
+		                    title: title,
+		                    start: response.startDate,
+		                    end: response.endDate,
+		                    allDay: false,
+		                    ts:ts,
+		                    id:response.id
+		                }, true); // make the event "stick"
+                    },
+                    error: function( jqXHR, textStatus, errorThrown ) {
+                        bootbox.alert('Error occured during saving event in the database\n'+errorThrown, function() {});
+                    }
+                });
+				}
+                	
+                
             }
             else if (confirm && (!title || !location_name))
             {
