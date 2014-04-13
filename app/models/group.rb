@@ -6,7 +6,7 @@ class Group < ActiveRecord::Base
   
   validates :name, presence: true
   
-  self.per_page=2
+  self.per_page=10
   
   def is_admin?(user)
     admin_role = Role.where(name: "Admin").first
