@@ -9,7 +9,53 @@
 	</p>
 </div>
 <% else %>
-<div id="calendar"></div>
+
+<div class="col-md-6" id="calendar"></div>
+<div class="col-md-6" id="rightSide" padding-left:20px">
+	
+	<h1 class="bg-primary">My groups</h1>
+	
+<% groups = current_user.groups %>
+
+<% if not groups.empty? %>
+    
+<table class="table table-hover header-fixed">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Visibility</th>
+      <th class="text-center">Subscribe/Unsubscribe</th>
+    </tr>
+  </thead>
+
+  <tbody>
+	<% groups.each do |group| %>
+	<% if group != groups.find(1) %>
+      <tr>
+        <td><%= link_to group.name, group %></td>
+        <td><%= group.description %></td>
+        <% if group.isPrivate %>
+        <td><span class="label label-default">private</span></td>
+        <% else %>
+        <td><span class="label label-primary">public</span></td>
+        <% end %>
+        
+        <% if group.is_admin?(current_user) %>
+          <td class="text-center"><%= icon("wrench") %></td>
+        <% else %>
+          <td class="text-center"><%= link_to icon("minus-circle"), group_unsubscribe_path(group.id) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    <% end %>
+    <% else %>
+    	<div class="alert alert-info">There are no groups yet ! <%= link_to "Create one !", new_group_path %></div>
+    <% end %>
+  </tbody>
+</table>
+
+</div>
 
 <script>
 	$(document).ready(function() { 

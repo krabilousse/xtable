@@ -16,20 +16,26 @@
 </p>
 	<% if not @events.empty? %>
 	<table class="table table-hover">
+	  <thead>
 		<tr>
 			<th>Event</th>
 			<th class="text-center">Participate</th>
 		</tr>
+	  </thead>
+	  
+	  <tbody>
 		<% @events.each do |event| %>
 		<tr>
 			<td><%= link_to event.name, event %></td>
 	        <td class="text-center"><%= link_to icon("plus-circle"), event_participate_path(event.id) %></td>
 		</tr>
-	</table>
+
 	<% end %>
 	<% else %>
 	<div class="alert alert-info">There are no events for this group! Create some by using the calendar.</div>
 	<% end %>
+		  </tbody>
+	</table>
 
 <h2>Who's the boss ?</h2>
 <%= @admin.name %>
